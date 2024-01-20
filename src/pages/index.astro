@@ -1,12 +1,13 @@
 ---
 import RootLayout from "../layouts/RootLayout.astro";
 
-import { client } from "../..//tina/__generated__/client";
+import { client } from "../../tina/__generated__/client";
 
 const eventsResponse = await client.queries.eventConnection();
 const events = eventsResponse.data.eventConnection.edges
   ?.sort((a, b) =>
-    new Date(a?.node?.date ?? 0).getTime() <= new Date(b?.node?.date ?? 0).getTime()
+    new Date(a?.node?.date ?? 0).getTime() <=
+    new Date(b?.node?.date ?? 0).getTime()
       ? -1
       : 0
   )
@@ -46,7 +47,7 @@ const events = eventsResponse.data.eventConnection.edges
         class="hero-content w-full grid grid-cols-1 md:grid-cols-2 max-md:gap-[60px]"
       >
         <div class="flex justify-center md:justify-start">
-          <div class="stats shadow">
+          <div class="stats shadow overflow-x-auto">
             <div class="stat">
               <div class="stat-figure text-secondary">
                 <svg
@@ -116,9 +117,9 @@ const events = eventsResponse.data.eventConnection.edges
             年。自那年起我们一直在开发让人喜欢的开源软件。在我们这里，“取之于开源，用之于开源”
             不仅是原则，更是我们信仰的座右铭。
           </p>
-          <a href="#history" class="btn btn-primary btn-md pl-[24px]"
-            >查看「岁月史书」</a
-          >
+          <a href="#history" class="btn btn-primary btn-md pl-[24px]">
+            查看「岁月史书」
+          </a>
         </div>
       </div>
     </div>
@@ -156,7 +157,7 @@ const events = eventsResponse.data.eventConnection.edges
                     </svg>
                   </div>
                   <div class="timeline-end timeline-box">
-                    <h2 class="font-bold">{item.title}</h2>
+                    <h2 class="font-bold text-lg">{item.title}</h2>
                     <div class="line-clamp-2">{item.description}</div>
                   </div>
                   {idx < events?.length - 1 && <hr />}
