@@ -30,6 +30,12 @@ const Event: Collection = {
       collections: ["author"],
     },
     {
+      type: "string",
+      label: "Description",
+      name: "description",
+      required: true,
+    },
+    {
       type: "datetime",
       label: "Published Date",
       name: "date",
