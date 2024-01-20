@@ -1,0 +1,58 @@
+---
+import "../assets/fonts/fonts.css";
+
+import Navbar from "../components/Navbar.astro";
+import { ViewTransitions } from "astro:transitions";
+
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <script is:inline>
+      if (localStorage.getItem("theme") === null) {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.setAttribute(
+          "data-theme",
+          localStorage.getItem("theme")
+        );
+      }
+    </script>
+
+    <ViewTransitions />
+  </head>
+  <body>
+    <!-- Header -->
+    <Navbar />
+
+    <!-- Content -->
+    <slot />
+    <style>
+      html {
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+      }
+    </style>
+
+    <style is:global>
+      .h-fullpage {
+        height: calc(100vh - 64px);
+      }
+
+      .max-h-fullpage {
+        max-height: calc(100vh - 64px);
+      }
+
+      .mt-header {
+        margin-top: 64px;
+      }
+    </style>
+  </body>
+</html>

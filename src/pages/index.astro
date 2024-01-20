@@ -1,0 +1,241 @@
+---
+import RootLayout from "../layouts/RootLayout.astro";
+
+import { client } from "../..//tina/__generated__/client";
+import { TinaMarkdown } from "tinacms/dist/rich-text";
+
+const eventsResponse = await client.queries.eventConnection();
+const events = eventsResponse.data.eventConnection.edges
+  ?.reverse()
+  .map((event) => {
+    return { ...event?.node, slug: event?.node?._sys.filename };
+  });
+---
+
+<RootLayout>
+  <div class="max-h-fullpage mt-header wrapper px-5 snap-y snap-mandatory">
+    <div id="hello" class="hero h-fullpage snap-start">
+      <div
+        class="hero-content w-full grid grid-cols-1 md:grid-cols-2 max-md:gap-[60px]"
+      >
+        <div class="max-md:text-center">
+          <h1 class="text-5xl font-bold">你好呀 👋</h1>
+          <p class="py-6">
+            欢迎来到 SmartSheep Studio
+            的官方网站！在这里了解，订阅，跟踪我们的最新消息。
+            接触我们最大的官方社区，并且尝试最新产品，参与各种活动，提供反馈，让我们更好的服务您。
+          </p>
+          <a href="#about" class="btn btn-primary btn-md">了解更多</a>
+        </div>
+
+        <div class="flex justify-center md:justify-end max-md:order-first">
+          <div
+            class="spinning p-3 md:p-5 shadow-2xl aspect-square rounded-[30%] w-[192px] md:w-[256px] lg:w-[384px]"
+          >
+            <img src="/favicon.svg" alt="logo" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="about" class="hero h-fullpage snap-start">
+      <div
+        class="hero-content w-full grid grid-cols-1 md:grid-cols-2 max-md:gap-[60px]"
+      >
+        <div class="flex justify-center md:justify-start">
+          <div class="stats shadow">
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path></svg
+                >
+              </div>
+              <div class="stat-title">People</div>
+              <div class="stat-value">1</div>
+              <div class="stat-desc">2019 - {new Date().getFullYear()}</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                  ></path></svg
+                >
+              </div>
+              <div class="stat-title">Clients</div>
+              <div class="stat-value">180</div>
+              <div class="stat-desc">↗︎ 80 (44%)</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+                  ></path></svg
+                >
+              </div>
+              <div class="stat-title">Products</div>
+              <div class="stat-value">4</div>
+              <div class="stat-desc">↘︎ 8 (67%)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="max-md:text-center">
+          <h1 class="text-5xl font-bold">关于我们 🔖</h1>
+          <p class="py-6">
+            我们是一群充满活力、对开源充满热情的开发者。成立于 2019
+            年。自那年起我们一直在开发让人喜欢的开源软件。在我们这里，“取之于开源，用之于开源”
+            不仅是原则，更是我们信仰的座右铭。
+          </p>
+          <a href="#history" class="btn btn-primary btn-md pl-[24px]">查看「岁月史书」</a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="history"
+      class="flex flex-col justify-center items-center h-fullpage snap-start"
+    >
+      <div class="text-center">
+        <div>
+          <h1 class="text-4xl font-bold">岁月史书</h1>
+          <p class="pt-2 pb-4 tracking-[8px]">但当涉猎，见往事耳</p>
+          <ul
+            class="pb-6 mx-[-20px] max-w-[100vw] px-5 flex justify-center history timeline timeline-horizontal"
+          >
+            {
+              events?.map((item: any, idx: number) => (
+                <li>
+                  {idx > 0 && <hr />}
+                  <div class="timeline-start">
+                    {new Date(item.date).toLocaleDateString()}
+                  </div>
+                  <div class="timeline-middle">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="w-5 h-5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div class="timeline-end timeline-box">
+                    <h2 class="font-bold">{item.title}</h2>
+                    <div class="line-clamp-2">
+                      <TinaMarkdown content={item._body} />
+                    </div>
+                  </div>
+                  {idx < events?.length - 1 && <hr />}
+                </li>
+              ))
+            }
+          </ul>
+          <a class="btn btn-primary" href="/events">查看更多</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</RootLayout>
+
+<script>
+  function debounce(func: any, timeout = 300) {
+    let timer: number;
+    return (...args: any[]) => {
+      clearTimeout(timer);
+      // @ts-ignore
+      timer = setTimeout(() => {
+        // @ts-ignore
+        func.apply(this, args);
+      }, timeout);
+    };
+  }
+
+  // Makes scroll means slide to next page
+  const wrapper = document.querySelector<HTMLDivElement>(".wrapper");
+  const template = document.querySelector<HTMLDivElement>("#hello");
+  const scroll = debounce((negative: boolean) => {
+    if (wrapper) {
+      console.log("scrolled");
+      let range = negative
+        ? -(template?.clientHeight ?? 0)
+        : template?.clientHeight ?? 0;
+      wrapper.scrollTop += range;
+    }
+  }, 40); // 40ms to prevent touchpad and smooth scroll software
+  wrapper?.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    scroll(event.deltaY < 0);
+  });
+</script>
+
+<style>
+  .spinning {
+    animation: 5s ease-in-out infinite running spinning;
+  }
+
+  @keyframes spinning {
+    0% {
+      rotate: 0deg;
+    }
+    60% {
+      rotate: 360deg;
+    }
+    100% {
+      rotate: 360deg;
+    }
+  }
+</style>
+
+<style scoped>
+  .wrapper {
+    overflow-y: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+
+  .wrapper::-webkit-scrollbar {
+    width: 0;
+  }
+
+  .history {
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+
+  .history::-webkit-scrollbar {
+    width: 0;
+  }
+</style>
