@@ -7,12 +7,12 @@ interface MenuItem {
 
 const items: MenuItem[] = [
   { href: "/posts", label: "记录" },
-  { href: "/annoucements", label: "情报" },
+  { href: "/events", label: "情报" },
   { href: "/projects", label: "企划" },
 ];
 ---
 
-<div class="fixed top-0 navbar shadow-md bg-base-100 lg:px-5">
+<div class="fixed top-0 navbar shadow-md bg-base-100 lg:px-5 z-10">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -84,9 +84,8 @@ const items: MenuItem[] = [
       <input
         type="checkbox"
         class="theme-controller"
-        value="light"
-        data-toggle-theme="dark,light"
-        data-act-class="active"
+        value="dark"
+        data-toggle-theme="dark"
       />
 
       <svg

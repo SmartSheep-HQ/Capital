@@ -33,7 +33,6 @@ const Event: Collection = {
       type: "string",
       label: "Description",
       name: "description",
-      required: true,
     },
     {
       type: "datetime",

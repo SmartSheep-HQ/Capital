@@ -1,0 +1,55 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+
+import { client } from "../../../tina/__generated__/client";
+
+const postsResponse = await client.queries.postConnection();
+const posts = postsResponse.data.postConnection.edges
+  ?.sort((a, b) =>
+    new Date(a?.node?.date ?? 0).getTime() <=
+    new Date(b?.node?.date ?? 0).getTime()
+      ? -1
+      : 0
+  )
+  .map((event) => {
+    return { ...event?.node, slug: event?.node?._sys.filename };
+  });
+---
+
+<PageLayout>
+  <div class="max-w-[720px] mx-auto">
+    <div class="pt-16 pb-6 px-6">
+      <h1 class="text-4xl font-bold">记录</h1>
+      <p class="pt-3">记录生活，记录理想，记录记录……</p>
+    </div>
+
+    <div class="card card-compact w-full shadow-xl">
+      <div class="card-body">
+        <div class="grid justify-items-strench gap-6">
+          {
+            posts?.map((item) => (
+              <a href={`/posts/${item.slug}`}>
+                <div class="card sm:card-side hover:bg-base-200 transition-colors sm:max-w-none">
+                  {item.heroImg && (
+                    <figure class="mx-auto w-full object-cover p-6 max-sm:pb-0 sm:max-w-[12rem] sm:pe-0">
+                      <img
+                        loading="lazy"
+                        src={item.heroImg}
+                        class="border-base-content bg-base-300 rounded-btn border border-opacity-5"
+                        alt={item.title}
+                      />
+                    </figure>
+                  )}
+                  <div class="card-body">
+                    <h2 class="card-title">{item.title}</h2>
+                    <p class="text-xs opacity-60">{item.description}</p>
+                  </div>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</PageLayout>

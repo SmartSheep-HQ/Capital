@@ -1,0 +1,79 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+
+import client from "../../../tina/__generated__/client";
+import { TinaMarkdown } from "tinacms/dist/rich-text";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+const { data } = await client.queries.post({
+  relativePath: (slug ?? "index") + ".mdx",
+});
+---
+
+<PageLayout>
+  <div class="wrapper">
+    <div class="card w-full shadow-xl">
+      {
+        data.post.heroImg && (
+          <figure>
+            <img src={data.post.heroImg} alt={data.post.title} />
+          </figure>
+        )
+      }
+      <div class="card-body">
+        <h2 class="card-title">{data.post.title}</h2>
+        <p class="description">{data.post.description ?? "No description"}</p>
+        <div class="divider"></div>
+
+        <div class="prose max-w-none">
+          <TinaMarkdown content={data.post._body} />
+        </div>
+      </div>
+    </div>
+
+    <div class="h-fit sticky top-header">
+      <div class="card shadow-xl">
+        <div class="card-body">
+          <div class="gap-2 text-sm metadata description">
+            <div>
+              <div>作者</div>
+              <div>{data.post.author?.name ?? "佚名"}</div>
+            </div>
+            <div>
+              <div>发布于</div>
+              <div>{new Date(data.post.date ?? 0).toLocaleString()}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</PageLayout>
+
+<style>
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .description {
+    color: oklch(var(--bc) / 0.8);
+  }
+
+  .metadata {
+    display: flex;
+    flex-direction: column;
+
+    transition: color 0.3s;
+  }
+
+  @media (min-width: 768px) {
+    .wrapper {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+</style>

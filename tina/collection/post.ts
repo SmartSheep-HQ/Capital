@@ -24,15 +24,15 @@ const Post: Collection = {
       label: "Hero Image",
     },
     {
-      type: "rich-text",
-      label: "Excerpt",
-      name: "excerpt",
-    },
-    {
       type: "reference",
       label: "Author",
       name: "author",
       collections: ["author"],
+    },
+    {
+      type: "string",
+      label: "Description",
+      name: "description",
     },
     {
       type: "datetime",
