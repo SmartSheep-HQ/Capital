@@ -1,5 +1,6 @@
 ---
 import PageLayout from "../../layouts/PageLayout.astro";
+import Video from "../../components/posts/Video.tsx";
 
 import { POST_TYPES } from "../../scripts/consts";
 import { client } from "../../../tina/__generated__/client";
@@ -8,6 +9,10 @@ import { TinaMarkdown } from "tinacms/dist/rich-text";
 export const prerender = false;
 
 const { slug } = Astro.params;
+
+const components = {
+  Video,
+}
 
 const { data } = await client.queries.post({
   relativePath: (slug ?? "index") + ".mdx",
@@ -30,7 +35,7 @@ const { data } = await client.queries.post({
         <div class="divider"></div>
 
         <div class="prose max-w-none">
-          <TinaMarkdown content={data.post._body} />
+          <TinaMarkdown content={data.post._body} components={components} />
         </div>
       </div>
     </div>

@@ -68,7 +68,32 @@ const Post: Collection = {
       type: "rich-text",
       label: "Body",
       name: "_body",
-      templates: [],
+      templates: [
+        {
+          name: "Video",
+          label: "Video",
+          fields: [
+            {
+              name: "sources",
+              label: "Sources",
+              type: "object",
+              fields: [
+                {
+                  name: "caption",
+                  label: "Caption",
+                  type: "string",
+                },
+                {
+                  name: "url",
+                  label: "URL",
+                  type: "string",
+                },
+              ],
+              list: true,
+            },
+          ],
+        },
+      ],
       isBody: true,
     },
   ],
