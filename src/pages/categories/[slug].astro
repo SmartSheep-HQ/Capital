@@ -10,8 +10,8 @@ const { slug } = Astro.params;
 
 const { posts } = (
   await graphQuery(
-    `query Query($where: PostWhereInput!) {
-  posts(where: $where) {
+    `query Query($where: PostWhereInput!, $orderBy: [PostOrderByInput!]!) {
+  posts(where: $where, orderBy: $orderBy) {
     slug
     type
     title
@@ -33,7 +33,14 @@ const { posts } = (
     createdAt
   }
 }`,
-    { where: { categories: { some: { slug: { equals: slug } } } } }
+    {
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+      ],
+      where: { categories: { some: { slug: { equals: slug } } } },
+    }
   )
 ).data;
 ---
