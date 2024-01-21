@@ -1,9 +1,9 @@
 import { useState, Fragment } from "react";
 
-export default function Video({
+export default function Media({
   sources,
 }: {
-  sources: { caption: string; url: string }[];
+  sources: { caption: string; url: string; type: string }[];
 }) {
   const [focus, setFocus] = useState<boolean[]>(
     sources.map((_, idx) => idx === 0)
@@ -30,9 +30,16 @@ export default function Video({
             role="tabpanel"
             className="tab-content bg-base-100 border-base-300 rounded-box"
           >
-            <video className="mb-0 block w-full h-[360px]" controls>
+            {item.type === "video" && (
+              <video className="mb-0 block w-full h-[360px]" controls>
                 <source src={item.url} />
-            </video>
+              </video>
+            )}
+            {item.type === "audio" && (
+              <audio className="mb-0 block w-full h-[20px]" controls>
+                <source src={item.url} />
+              </audio>
+            )}
           </div>
         </Fragment>
       ))}

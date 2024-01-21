@@ -1,33 +1,48 @@
 ---
 import PageLayout from "../../layouts/PageLayout.astro";
-
-import { client } from "../../../tina/__generated__/client";
 import PostList from "../../components/PostList.astro";
+
+import { graphQuery } from "../../scripts/requests";
 
 export const prerender = false;
 
 const { slug } = Astro.params;
 
-const postsResponse = await client.queries.postConnection({
-  filter: { tags: { in: [slug ?? "index"] } },
-});
-const posts = postsResponse.data.postConnection.edges
-  ?.sort((a, b) =>
-    new Date(a?.node?.date ?? 0).getTime() <=
-    new Date(b?.node?.date ?? 0).getTime()
-      ? -1
-      : 0
+const { posts } = (
+  await graphQuery(
+    `query Query($where: PostWhereInput!) {
+  posts(where: $where) {
+    slug
+    type
+    title
+    description
+    cover {
+      image {
+        url
+      }
+    }
+    content {
+      document
+    }
+    categories {
+      name
+    }
+    tags {
+      name
+    }
+    createdAt
+  }
+}`,
+    { where: { tags: { some: { slug: { equals: slug } } } } }
   )
-  .map((event) => {
-    return { ...event?.node, slug: event?.node?._sys.filename };
-  });
+).data;
 ---
 
 <PageLayout>
   <div class="max-w-[720px] mx-auto">
     <div class="pt-16 pb-6 px-6">
       <h1 class="text-4xl font-bold">标签检索</h1>
-      <p class="pt-3">以下是包含「{slug}」标签的记录……</p>
+      <p class="pt-3">以下是包含该标签的记录……</p>
     </div>
 
     <PostList posts={posts as any[]} />

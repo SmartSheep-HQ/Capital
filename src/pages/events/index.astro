@@ -1,29 +1,40 @@
 ---
 import PageLayout from "../../layouts/PageLayout.astro";
 
-import { client } from "../../../tina/__generated__/client";
-import { TinaMarkdown } from "tinacms/dist/rich-text";
+import { graphQuery } from "../../scripts/requests";
+import { DocumentRenderer } from "@keystone-6/document-renderer";
 
 export const prerender = false;
 
-const eventsResponse = await client.queries.eventConnection();
-const events = eventsResponse.data.eventConnection.edges
-  ?.sort((a, b) =>
-    new Date(a?.node?.date ?? 0).getTime() <=
-    new Date(b?.node?.date ?? 0).getTime()
-      ? -1
-      : 0
+const { events } = (
+  await graphQuery(
+    `query Query($where: EventWhereInput!) {
+  events(where: $where) {
+    slug
+    title
+    description
+    content {
+      document
+    }
+    createdAt
+  }
+}`,
+    {
+      where: {
+        isHistory: {
+          equals: true,
+        },
+      },
+    }
   )
-  .map((event) => {
-    return { ...event?.node, slug: event?.node?._sys.filename };
-  });
+).data;
 ---
 
 <PageLayout>
   <div class="max-w-[720px] mx-auto">
     <div class="card w-full shadow-xl">
       <div class="card-body">
-        <h2 class="card-title">情报</h2>
+        <h2 class="card-title">活动</h2>
         <p>读岁月史书，涨人生阅历</p>
         <div class="divider"></div>
 
@@ -32,8 +43,8 @@ const events = eventsResponse.data.eventConnection.edges
         >
           {
             events?.map((item: any, idx: number) => {
-              let align = idx % 2 === 0 ? "start" : "end";
-              let textAlign = idx % 2 === 0 ? "left" : "right";
+              let align = idx % 2 === 0 ? "timeline-start" : "timeline-end";
+              let textAlign = idx % 2 === 0 ? "md:text-right" : "md:text-left";
 
               return (
                 <li>
@@ -52,12 +63,12 @@ const events = eventsResponse.data.eventConnection.edges
                       />
                     </svg>
                   </div>
-                  <div class={`timeline-${align} md:text-${textAlign} mb-10`}>
+                  <div class={`${align} ${textAlign} mb-10`}>
                     <time class="font-mono italic">
-                      {new Date(item.date).toLocaleDateString()}
+                      {new Date(item.createdAt).toLocaleDateString()}
                     </time>
                     <div class="text-lg font-black">{item.title}</div>
-                    <TinaMarkdown content={item._body} />
+                    <DocumentRenderer document={item.content.document} />
                   </div>
                   <hr />
                 </li>
@@ -65,7 +76,9 @@ const events = eventsResponse.data.eventConnection.edges
             })
           }
         </ul>
-        <div class="text-center max-md:text-left italic">我们的故事还在继续……</div>
+        <div class="text-center max-md:text-left italic">
+          我们的故事还在继续……
+        </div>
       </div>
     </div>
   </div>

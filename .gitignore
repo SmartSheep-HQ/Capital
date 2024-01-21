@@ -21,5 +21,4 @@ pnpm-debug.log*
 .DS_Store
 
 # Development content
-content
 public/media

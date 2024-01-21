@@ -1,19 +1,27 @@
 ---
 import RootLayout from "../layouts/RootLayout.astro";
 
-import { client } from "../../tina/__generated__/client";
+import { graphQuery } from "../scripts/requests";
 
-const eventsResponse = await client.queries.eventConnection();
-const events = eventsResponse.data.eventConnection.edges
-  ?.sort((a, b) =>
-    new Date(a?.node?.date ?? 0).getTime() <=
-    new Date(b?.node?.date ?? 0).getTime()
-      ? -1
-      : 0
+const { events } = (
+  await graphQuery(
+    `query Query($where: EventWhereInput!) {
+  events(where: $where) {
+    slug
+    title
+    description
+    createdAt
+  }
+}`,
+    {
+      where: {
+        isHistory: {
+          equals: true,
+        },
+      },
+    }
   )
-  .map((event) => {
-    return { ...event?.node, slug: event?.node?._sys.filename };
-  });
+).data;
 ---
 
 <RootLayout>
@@ -140,7 +148,7 @@ const events = eventsResponse.data.eventConnection.edges
                 <li>
                   {idx > 0 && <hr />}
                   <div class="timeline-start">
-                    {new Date(item.date).toLocaleDateString()}
+                    {new Date(item.createdAt).toLocaleDateString()}
                   </div>
                   <div class="timeline-middle">
                     <svg
