@@ -3,6 +3,8 @@ import RootLayout from "../layouts/RootLayout.astro";
 
 import { graphQuery } from "../scripts/requests";
 
+export const prerender = false;
+
 const { events } = (
   await graphQuery(
     `query Query($where: EventWhereInput!) {
