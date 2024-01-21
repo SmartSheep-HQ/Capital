@@ -81,12 +81,7 @@ const items: MenuItem[] = [
   </div>
   <div class="navbar-end">
     <label class="swap swap-rotate px-[16px]">
-      <input
-        type="checkbox"
-        class="theme-controller"
-        value="dark"
-        data-toggle-theme="dark"
-      />
+      <input type="checkbox" class="theme-controller" value="light" checked />
 
       <svg
         class="swap-on fill-current w-8 h-8"
@@ -108,9 +103,3 @@ const items: MenuItem[] = [
     </label>
   </div>
 </div>
-
-<script>
-  import { themeChange } from "theme-change";
-
-  themeChange();
-</script>

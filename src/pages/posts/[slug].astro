@@ -1,7 +1,8 @@
 ---
 import PageLayout from "../../layouts/PageLayout.astro";
 
-import client from "../../../tina/__generated__/client";
+import { POST_TYPES } from "../../scripts/consts";
+import { client } from "../../../tina/__generated__/client";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 
 export const prerender = false;
@@ -41,6 +42,34 @@ const { data } = await client.queries.post({
             <div>
               <div>作者</div>
               <div>{data.post.author?.name ?? "佚名"}</div>
+            </div>
+            <div>
+              <div>类型</div>
+              <div class="text-accent">{POST_TYPES[data.post.type as unknown as string]}</div>
+            </div>
+            <div>
+              <div>分类</div>
+              <div class="flex gap-1">
+                {
+                  data.post.categories?.map((category) => (
+                    <a href={`/categories/${category}`} class="link link-primary">
+                      {category}
+                    </a>
+                  ))
+                }
+              </div>
+            </div>
+            <div>
+              <div>标签</div>
+              <div class="flex gap-1">
+                {
+                  data.post.tags?.map((tag) => (
+                    <a href={`/tags/${tag}`} class="link link-secondary">
+                      {tag}
+                    </a>
+                  ))
+                }
+              </div>
             </div>
             <div>
               <div>发布于</div>

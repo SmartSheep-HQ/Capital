@@ -1,0 +1,45 @@
+---
+interface Props {
+  posts: any[];
+}
+
+import { POST_TYPES } from "../scripts/consts";
+
+const { posts } = Astro.props;
+---
+
+<div class="grid justify-items-strench gap-6">
+  {
+    posts?.map((item) => (
+      <a href={`/posts/${item.slug}`}>
+        <div class="card sm:card-side hover:bg-base-200 transition-colors sm:max-w-none shadow-xl">
+          {item.heroImg && (
+            <figure class="mx-auto w-full object-cover p-6 max-sm:pb-0 sm:max-w-[12rem] sm:pe-0">
+              <img
+                loading="lazy"
+                src={item.heroImg}
+                class="border-base-content bg-base-300 rounded-btn border border-opacity-5"
+                alt={item.title}
+              />
+            </figure>
+          )}
+          <div class="card-body">
+            <h2 class="text-xl">{item.title}</h2>
+            <div>
+              <span class="badge badge-accent">{POST_TYPES[item.type]}</span>
+              {item.categories?.map((category: string) => (
+                <span class="badge badge-primary">{category}</span>
+              ))}
+              {item.tags?.map((tag: string) => (
+                <span class="badge badge-secondary">{tag}</span>
+              ))}
+            </div>
+            <div class="text-xs opacity-60 line-clamp-3">
+              {item.description}
+            </div>
+          </div>
+        </div>
+      </a>
+    ))
+  }
+</div>

@@ -6,7 +6,11 @@ import PostList from "../../components/PostList.astro";
 
 export const prerender = false;
 
-const postsResponse = await client.queries.postConnection();
+const { slug } = Astro.params;
+
+const postsResponse = await client.queries.postConnection({
+  filter: { categories: { in: [slug ?? "index"] } },
+});
 const posts = postsResponse.data.postConnection.edges
   ?.sort((a, b) =>
     new Date(a?.node?.date ?? 0).getTime() <=
@@ -22,9 +26,10 @@ const posts = postsResponse.data.postConnection.edges
 <PageLayout>
   <div class="max-w-[720px] mx-auto">
     <div class="pt-16 pb-6 px-6">
-      <h1 class="text-4xl font-bold">记录</h1>
-      <p class="pt-3">记录生活，记录理想，记录记录……</p>
+      <h1 class="text-4xl font-bold">分类检索</h1>
+      <p class="pt-3">以下是包含「{slug}」分类的记录……</p>
     </div>
 
     <PostList posts={posts as any[]} />
+  </div>
 </PageLayout>

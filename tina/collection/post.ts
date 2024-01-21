@@ -44,6 +44,27 @@ const Post: Collection = {
       },
     },
     {
+      label: "Categories",
+      name: "categories",
+      type: "string",
+      list: true,
+    },
+    {
+      label: "Tags",
+      name: "tags",
+      type: "string",
+      list: true,
+    },
+    {
+      label: "Type",
+      name: "type",
+      type: "string",
+      // @ts-ignore
+      component: "select",
+      options: ["article", "podcast", "announcement"],
+      list: true,
+    },
+    {
       type: "rich-text",
       label: "Body",
       name: "_body",

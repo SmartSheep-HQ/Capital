@@ -4,6 +4,8 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import { client } from "../../../tina/__generated__/client";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 
+export const prerender = false;
+
 const eventsResponse = await client.queries.eventConnection();
 const events = eventsResponse.data.eventConnection.edges
   ?.sort((a, b) =>
