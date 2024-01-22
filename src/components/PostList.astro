@@ -11,7 +11,7 @@ const { posts } = Astro.props;
 <div class="grid justify-items-strench gap-6">
   {
     posts?.map((item) => (
-      <a href={`/posts/${item.slug}`}>
+      <a href={`/p/${item.slug}`}>
         <div class="card sm:card-side hover:bg-base-200 transition-colors sm:max-w-none shadow-xl">
           {item.cover.image.url && (
             <figure class="mx-auto w-full object-cover p-6 max-sm:pb-0 sm:max-w-[12rem] sm:pe-0">

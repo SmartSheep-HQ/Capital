@@ -12,6 +12,9 @@ export default defineConfig({
   site: "https://smartsheep.studio",
   integrations: [tailwind(), react(), sitemap()],
   adapter: node({
-    mode: "standalone"
-  })
+    mode: "standalone",
+  }),
+  redirects: {
+    "/p/[...slug]": "/posts/[...slug]",
+  },
 });
