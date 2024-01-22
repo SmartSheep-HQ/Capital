@@ -1,8 +1,10 @@
 ---
 import RootLayout from "./RootLayout.astro";
+
+const { title } = Astro.props;
 ---
 
-<RootLayout>
+<RootLayout title={title}>
   <main class="container mx-auto h-fullpage mt-header">
     <slot />
   </main>

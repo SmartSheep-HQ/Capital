@@ -13,8 +13,8 @@ const { slug } = Astro.params;
 
 const { post } = (
   await graphQuery(
-    `query Query($where: PostWhereInput!, $orderBy: [PostOrderByInput!]!) {
-  posts(where: $where, orderBy: $orderBy) {
+    `query Query($where: PostWhereUniqueInput!) {
+  post(where: $where) {
     slug
     type
     title
@@ -44,22 +44,17 @@ const { post } = (
   }
 }`,
     {
-      orderBy: [
-        {
-          createdAt: "desc",
-        },
-      ],
       where: { slug },
     }
   )
 ).data;
 ---
 
-<PageLayout>
+<PageLayout title={post.title}>
   <div class="wrapper">
     <div class="card w-full shadow-xl">
       {
-        post.cover != null && (
+        post.cover && (
           <figure>
             <img src={post.cover.image.url} alt={post.title} />
           </figure>
