@@ -139,8 +139,7 @@ body {
   font-family: "Noto Serif SC";
   font-style: normal;
   font-weight: 200;
-  src: url("./noto-serif-sc-v22-chinese-simplified-200.woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./noto-serif-sc-v22-chinese-simplified-200.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* noto-serif-sc-300 - chinese-simplified */
@@ -149,8 +148,7 @@ body {
   font-family: "Noto Serif SC";
   font-style: normal;
   font-weight: 300;
-  src: url("./noto-serif-sc-v22-chinese-simplified-300.woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./noto-serif-sc-v22-chinese-simplified-300.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* noto-serif-sc-regular - chinese-simplified */
@@ -159,8 +157,7 @@ body {
   font-family: "Noto Serif SC";
   font-style: normal;
   font-weight: 400;
-  src: url("./noto-serif-sc-v22-chinese-simplified-regular.woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./noto-serif-sc-v22-chinese-simplified-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* noto-serif-sc-500 - chinese-simplified */
@@ -169,8 +166,7 @@ body {
   font-family: "Noto Serif SC";
   font-style: normal;
   font-weight: 500;
-  src: url("./noto-serif-sc-v22-chinese-simplified-500.woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./noto-serif-sc-v22-chinese-simplified-500.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* noto-serif-sc-600 - chinese-simplified */
@@ -179,8 +175,7 @@ body {
   font-family: "Noto Serif SC";
   font-style: normal;
   font-weight: 600;
-  src: url("./noto-serif-sc-v22-chinese-simplified-600.woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./noto-serif-sc-v22-chinese-simplified-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* noto-serif-sc-700 - chinese-simplified */
@@ -189,8 +184,7 @@ body {
   font-family: "Noto Serif SC";
   font-style: normal;
   font-weight: 700;
-  src: url("./noto-serif-sc-v22-chinese-simplified-700.woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./noto-serif-sc-v22-chinese-simplified-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* noto-serif-sc-900 - chinese-simplified */
@@ -199,6 +193,5 @@ body {
   font-family: "Noto Serif SC";
   font-style: normal;
   font-weight: 900;
-  src: url("./noto-serif-sc-v22-chinese-simplified-900.woff2")
-    format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./noto-serif-sc-v22-chinese-simplified-900.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }

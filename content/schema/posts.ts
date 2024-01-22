@@ -1,10 +1,4 @@
-import {
-  checkbox,
-  relationship,
-  select,
-  text,
-  timestamp,
-} from "@keystone-6/core/fields";
+import { checkbox, relationship, select, text, timestamp } from "@keystone-6/core/fields";
 import { document } from "@keystone-6/fields-document";
 import { list } from "@keystone-6/core";
 import { allowEditor } from "../limit";

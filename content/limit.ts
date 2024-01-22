@@ -7,8 +7,7 @@ const allowUser: any = {
   },
 };
 
-const isEditor = ({ session }: { session: any }) =>
-  session?.data.isEditor || session?.data.isAdmin;
+const isEditor = ({ session }: { session: any }) => session?.data.isEditor || session?.data.isAdmin;
 const allowEditor: any = {
   operation: {
     create: isEditor,

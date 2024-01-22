@@ -1,12 +1,6 @@
 import { list } from "@keystone-6/core";
 
-import {
-  text,
-  relationship,
-  password,
-  timestamp,
-  checkbox,
-} from "@keystone-6/core/fields";
+import { text, relationship, password, timestamp, checkbox } from "@keystone-6/core/fields";
 
 import { allowAdmin } from "../limit";
 

@@ -4,14 +4,16 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
+  for (var name in all) __defProp(target, name, { get: all[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
+  if ((from && typeof from === "object") || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
       if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        __defProp(to, key, {
+          get: () => from[key],
+          enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable,
+        });
   }
   return to;
 };
@@ -20,7 +22,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // keystone.ts
 var keystone_exports = {};
 __export(keystone_exports, {
-  default: () => keystone_default
+  default: () => keystone_default,
 });
 module.exports = __toCommonJS(keystone_exports);
 var import_core8 = require("@keystone-6/core");
@@ -35,24 +37,24 @@ var allowUser = {
   operation: {
     create: isUser,
     update: isUser,
-    delete: isUser
-  }
+    delete: isUser,
+  },
 };
 var isEditor = ({ session: session2 }) => session2?.data.isEditor || session2?.data.isAdmin;
 var allowEditor = {
   operation: {
     create: isEditor,
     update: isEditor,
-    delete: isEditor
-  }
+    delete: isEditor,
+  },
 };
 var isAdmin = ({ session: session2 }) => session2?.data.isAdmin;
 var allowAdmin = {
   operation: {
     create: isAdmin,
     update: isAdmin,
-    delete: isAdmin
-  }
+    delete: isAdmin,
+  },
 };
 
 // schema/assets.ts
@@ -64,9 +66,9 @@ var Image = (0, import_core.list)({
     caption: (0, import_fields.text)(),
     image: (0, import_fields.image)({ storage: "localImages" }),
     createdAt: (0, import_fields.timestamp)({
-      defaultValue: { kind: "now" }
-    })
-  }
+      defaultValue: { kind: "now" },
+    }),
+  },
 });
 var Asset = (0, import_core.list)({
   access: allowEditor,
@@ -77,17 +79,17 @@ var Asset = (0, import_core.list)({
       type: "enum",
       options: [
         { label: "Video", value: "video" },
-        { label: "Audio", value: "audio" }
+        { label: "Audio", value: "audio" },
       ],
       defaultValue: "video",
       db: { map: "media_type" },
       validation: { isRequired: true },
-      ui: { displayMode: "select" }
+      ui: { displayMode: "select" },
     }),
     createdAt: (0, import_fields.timestamp)({
-      defaultValue: { kind: "now" }
-    })
-  }
+      defaultValue: { kind: "now" },
+    }),
+  },
 });
 
 // schema/moments.ts
@@ -106,10 +108,10 @@ var Moment = (0, import_core2.list)({
         [1, 1, 1],
         [2, 1],
         [1, 2],
-        [1, 2, 1]
+        [1, 2, 1],
       ],
       links: true,
-      dividers: true
+      dividers: true,
     }),
     author: (0, import_fields2.relationship)({
       ref: "User.moments",
@@ -118,9 +120,9 @@ var Moment = (0, import_core2.list)({
         cardFields: ["name", "email"],
         inlineEdit: { fields: ["name", "email"] },
         linkToItem: true,
-        inlineConnect: true
+        inlineConnect: true,
       },
-      many: false
+      many: false,
     }),
     categories: (0, import_fields2.relationship)({
       ref: "Category.moments",
@@ -131,8 +133,8 @@ var Moment = (0, import_core2.list)({
         inlineEdit: { fields: ["name"] },
         linkToItem: true,
         inlineConnect: true,
-        inlineCreate: { fields: ["name"] }
-      }
+        inlineCreate: { fields: ["name"] },
+      },
     }),
     tags: (0, import_fields2.relationship)({
       ref: "Tag.moments",
@@ -143,13 +145,13 @@ var Moment = (0, import_core2.list)({
         inlineEdit: { fields: ["name"] },
         linkToItem: true,
         inlineConnect: true,
-        inlineCreate: { fields: ["name"] }
-      }
+        inlineCreate: { fields: ["name"] },
+      },
     }),
     createdAt: (0, import_fields2.timestamp)({
-      defaultValue: { kind: "now" }
-    })
-  }
+      defaultValue: { kind: "now" },
+    }),
+  },
 });
 
 // schema/categories.ts
@@ -160,30 +162,30 @@ var Category = (0, import_core3.list)({
   fields: {
     slug: (0, import_fields3.text)({
       validation: {
-        isRequired: true
+        isRequired: true,
       },
-      isIndexed: "unique"
+      isIndexed: "unique",
     }),
     name: (0, import_fields3.text)(),
     posts: (0, import_fields3.relationship)({ ref: "Post.categories", many: true }),
     moments: (0, import_fields3.relationship)({ ref: "Moment.categories", many: true }),
-    events: (0, import_fields3.relationship)({ ref: "Event.categories", many: true })
-  }
+    events: (0, import_fields3.relationship)({ ref: "Event.categories", many: true }),
+  },
 });
 var Tag = (0, import_core3.list)({
   access: allowEditor,
   fields: {
     slug: (0, import_fields3.text)({
       validation: {
-        isRequired: true
+        isRequired: true,
       },
-      isIndexed: "unique"
+      isIndexed: "unique",
     }),
     name: (0, import_fields3.text)(),
     posts: (0, import_fields3.relationship)({ ref: "Post.tags", many: true }),
     moments: (0, import_fields3.relationship)({ ref: "Moment.tags", many: true }),
-    events: (0, import_fields3.relationship)({ ref: "Event.tags", many: true })
-  }
+    events: (0, import_fields3.relationship)({ ref: "Event.tags", many: true }),
+  },
 });
 
 // schema/projects.ts
@@ -194,11 +196,10 @@ var Project = (0, import_core4.list)({
     ...allowAdmin,
     filter: {
       query: ({ session: session2 }) => {
-        if (session2?.data.isEditor || session2?.data.isAdmin)
-          return true;
+        if (session2?.data.isEditor || session2?.data.isAdmin) return true;
         return { isPublished: { equals: true } };
-      }
-    }
+      },
+    },
   },
   fields: {
     icon: (0, import_fields4.relationship)({ ref: "Image" }),
@@ -212,18 +213,18 @@ var Project = (0, import_core4.list)({
         { label: "Pending", value: "pending" },
         { label: "Constructing", value: "constructing" },
         { label: "Published", value: "published" },
-        { label: "Abandoned", value: "abandoned" }
+        { label: "Abandoned", value: "abandoned" },
       ],
       defaultValue: "pending",
       db: { map: "project_status" },
       validation: { isRequired: true },
-      ui: { displayMode: "select" }
+      ui: { displayMode: "select" },
     }),
     post: (0, import_fields4.relationship)({ ref: "Post" }),
     createdAt: (0, import_fields4.timestamp)({
-      defaultValue: { kind: "now" }
-    })
-  }
+      defaultValue: { kind: "now" },
+    }),
+  },
 });
 
 // schema/posts.ts
@@ -235,18 +236,17 @@ var Post = (0, import_core5.list)({
     ...allowEditor,
     filter: {
       query: ({ session: session2 }) => {
-        if (session2?.data.isEditor || session2?.data.isAdmin)
-          return true;
+        if (session2?.data.isEditor || session2?.data.isAdmin) return true;
         return { isPublished: { equals: true } };
-      }
-    }
+      },
+    },
   },
   fields: {
     slug: (0, import_fields5.text)({
       validation: {
-        isRequired: true
+        isRequired: true,
       },
-      isIndexed: "unique"
+      isIndexed: "unique",
     }),
     title: (0, import_fields5.text)({ validation: { isRequired: true } }),
     cover: (0, import_fields5.relationship)({ ref: "Image" }),
@@ -260,21 +260,21 @@ var Post = (0, import_core5.list)({
         [1, 1, 1],
         [2, 1],
         [1, 2],
-        [1, 2, 1]
+        [1, 2, 1],
       ],
       links: true,
-      dividers: true
+      dividers: true,
     }),
     type: (0, import_fields5.select)({
       type: "enum",
       options: [
         { label: "Article", value: "article" },
-        { label: "Podcast", value: "podcast" }
+        { label: "Podcast", value: "podcast" },
       ],
       defaultValue: "article",
       db: { map: "post_type" },
       validation: { isRequired: true },
-      ui: { displayMode: "select" }
+      ui: { displayMode: "select" },
     }),
     isPublished: (0, import_fields5.checkbox)(),
     author: (0, import_fields5.relationship)({
@@ -284,9 +284,9 @@ var Post = (0, import_core5.list)({
         cardFields: ["name", "email"],
         inlineEdit: { fields: ["name", "email"] },
         linkToItem: true,
-        inlineConnect: true
+        inlineConnect: true,
       },
-      many: false
+      many: false,
     }),
     categories: (0, import_fields5.relationship)({
       ref: "Category.posts",
@@ -297,8 +297,8 @@ var Post = (0, import_core5.list)({
         inlineEdit: { fields: ["name"] },
         linkToItem: true,
         inlineConnect: true,
-        inlineCreate: { fields: ["name"] }
-      }
+        inlineCreate: { fields: ["name"] },
+      },
     }),
     tags: (0, import_fields5.relationship)({
       ref: "Tag.posts",
@@ -309,13 +309,13 @@ var Post = (0, import_core5.list)({
         inlineEdit: { fields: ["name"] },
         linkToItem: true,
         inlineConnect: true,
-        inlineCreate: { fields: ["name"] }
-      }
+        inlineCreate: { fields: ["name"] },
+      },
     }),
     createdAt: (0, import_fields5.timestamp)({
-      defaultValue: { kind: "now" }
-    })
-  }
+      defaultValue: { kind: "now" },
+    }),
+  },
 });
 
 // schema/events.ts
@@ -327,18 +327,17 @@ var Event = (0, import_core6.list)({
     ...allowEditor,
     filter: {
       query: ({ session: session2 }) => {
-        if (session2?.data.isEditor || session2?.data.isAdmin)
-          return true;
+        if (session2?.data.isEditor || session2?.data.isAdmin) return true;
         return { isPublished: { equals: true } };
-      }
-    }
+      },
+    },
   },
   fields: {
     slug: (0, import_fields6.text)({
       validation: {
-        isRequired: true
+        isRequired: true,
       },
-      isIndexed: "unique"
+      isIndexed: "unique",
     }),
     title: (0, import_fields6.text)({ validation: { isRequired: true } }),
     description: (0, import_fields6.text)(),
@@ -349,10 +348,10 @@ var Event = (0, import_core6.list)({
         [1, 1, 1],
         [2, 1],
         [1, 2],
-        [1, 2, 1]
+        [1, 2, 1],
       ],
       links: true,
-      dividers: true
+      dividers: true,
     }),
     isPublished: (0, import_fields6.checkbox)(),
     isHistory: (0, import_fields6.checkbox)(),
@@ -363,9 +362,9 @@ var Event = (0, import_core6.list)({
         cardFields: ["name", "email"],
         inlineEdit: { fields: ["name", "email"] },
         linkToItem: true,
-        inlineConnect: true
+        inlineConnect: true,
       },
-      many: false
+      many: false,
     }),
     categories: (0, import_fields6.relationship)({
       ref: "Category.events",
@@ -376,8 +375,8 @@ var Event = (0, import_core6.list)({
         inlineEdit: { fields: ["name"] },
         linkToItem: true,
         inlineConnect: true,
-        inlineCreate: { fields: ["name"] }
-      }
+        inlineCreate: { fields: ["name"] },
+      },
     }),
     tags: (0, import_fields6.relationship)({
       ref: "Tag.events",
@@ -388,13 +387,13 @@ var Event = (0, import_core6.list)({
         inlineEdit: { fields: ["name"] },
         linkToItem: true,
         inlineConnect: true,
-        inlineCreate: { fields: ["name"] }
-      }
+        inlineCreate: { fields: ["name"] },
+      },
     }),
     createdAt: (0, import_fields6.timestamp)({
-      defaultValue: { kind: "now" }
-    })
-  }
+      defaultValue: { kind: "now" },
+    }),
+  },
 });
 
 // schema/index.ts
@@ -405,7 +404,7 @@ var lists = {
       name: (0, import_fields7.text)({ validation: { isRequired: true } }),
       email: (0, import_fields7.text)({
         validation: { isRequired: true },
-        isIndexed: "unique"
+        isIndexed: "unique",
       }),
       password: (0, import_fields7.password)({ validation: { isRequired: true } }),
       posts: (0, import_fields7.relationship)({ ref: "Post.author", many: true }),
@@ -414,9 +413,9 @@ var lists = {
       isAdmin: (0, import_fields7.checkbox)(),
       isEditor: (0, import_fields7.checkbox)(),
       createdAt: (0, import_fields7.timestamp)({
-        defaultValue: { kind: "now" }
-      })
-    }
+        defaultValue: { kind: "now" },
+      }),
+    },
   }),
   Image,
   Asset,
@@ -425,7 +424,7 @@ var lists = {
   Project,
   Event,
   Category,
-  Tag
+  Tag,
 };
 
 // auth.ts
@@ -442,13 +441,13 @@ var { withAuth } = (0, import_auth.createAuth)({
   sessionData: "id name createdAt isAdmin isEditor",
   secretField: "password",
   initFirstItem: {
-    fields: ["name", "email", "password", "isAdmin"]
-  }
+    fields: ["name", "email", "password", "isAdmin"],
+  },
 });
 var sessionMaxAge = 60 * 60 * 24 * 30;
 var session = (0, import_session.statelessSessions)({
   maxAge: sessionMaxAge,
-  secret: sessionSecret
+  secret: sessionSecret,
 });
 
 // keystone.ts
@@ -458,17 +457,17 @@ var databaseProvider = process.env.DATABASE_PROVIDER ?? "postgresql";
 var keystone_default = withAuth(
   (0, import_core8.config)({
     ui: {
-      basePath: "/cms"
+      basePath: "/cms",
     },
     db: {
       provider: databaseProvider,
-      url: databaseUrl
+      url: databaseUrl,
     },
     server: {
       cors: {
         origin: "*",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
-      }
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      },
     },
     storage: {
       localImages: {
@@ -476,13 +475,13 @@ var keystone_default = withAuth(
         type: "image",
         generateUrl: (path) => `${baseUrl}/images${path}`,
         serverRoute: {
-          path: "/images"
+          path: "/images",
         },
-        storagePath: "public/images"
-      }
+        storagePath: "public/images",
+      },
     },
     lists,
-    session
-  })
+    session,
+  }),
 );
 //# sourceMappingURL=config.js.map
