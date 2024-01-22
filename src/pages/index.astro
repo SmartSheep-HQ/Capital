@@ -182,38 +182,6 @@ const { events } = (
   </div>
 </RootLayout>
 
-<script>
-  function debounce(func: any, timeout = 300) {
-    let timer: number;
-    return (...args: any[]) => {
-      clearTimeout(timer);
-      // @ts-ignore
-      timer = setTimeout(() => {
-        // @ts-ignore
-        func.apply(this, args);
-      }, timeout);
-    };
-  }
-
-  // Makes scroll means slide to next page
-  const wrapper = document.querySelector<HTMLDivElement>(".wrapper");
-  const template = document.querySelector<HTMLDivElement>("#hello");
-  const scroll = debounce((negative: boolean) => {
-    if (wrapper) {
-      console.log("scrolled");
-      let range = negative
-        ? -(template?.clientHeight ?? 0)
-        : template?.clientHeight ?? 0;
-      wrapper.scrollTop += range;
-    }
-  }, 40); // 40ms to prevent touchpad and smooth scroll software
-  wrapper?.addEventListener("wheel", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    scroll(event.deltaY < 0);
-  });
-</script>
-
 <style>
   .spinning {
     animation: 5s ease-in-out infinite running spinning;

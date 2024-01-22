@@ -2,14 +2,14 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 import PostList from "../../components/PostList.astro";
 
-import { graphQuery } from "../../scripts/requests";
+import {graphQuery} from "../../scripts/requests";
 
 export const prerender = false;
 
-const { posts } = (
-  await graphQuery(
-    `query Query($where: PostWhereInput!) {
-  posts(where: $where) {
+const {posts} = (
+    await graphQuery(
+        `query Query($where: PostWhereInput!, $orderBy: [PostOrderByInput!]!) {
+  posts(where: $where, orderBy: $orderBy) {
     slug
     type
     title
@@ -31,18 +31,25 @@ const { posts } = (
     createdAt
   }
 }`,
-    { where: {} }
-  )
+        {
+            orderBy: [
+                {
+                    createdAt: "desc",
+                },
+            ],
+            where: {}
+        }
+    )
 ).data;
 ---
 
 <PageLayout title="记录">
-  <div class="max-w-[720px] mx-auto">
-    <div class="pt-16 pb-6 px-6">
-      <h1 class="text-4xl font-bold">记录</h1>
-      <p class="pt-2">记录生活，记录理想，记录记录……</p>
-    </div>
+    <div class="max-w-[720px] mx-auto">
+        <div class="pt-16 pb-6 px-6">
+            <h1 class="text-4xl font-bold">记录</h1>
+            <p class="pt-2">记录生活，记录理想，记录记录……</p>
+        </div>
 
-    <PostList posts={posts as any[]} />
-  </div>
+        <PostList posts={posts as any[]}/>
+    </div>
 </PageLayout>
