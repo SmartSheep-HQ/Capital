@@ -2,7 +2,9 @@
   "extends": "astro/tsconfigs/strict",
   "exclude": ["./content", "./dist"],
   "compilerOptions": {
+    "target": "es5",
+    "lib": ["esnext", "es2021"],
     "jsx": "react-jsx",
-    "jsxImportSource": "react",
+    "jsxImportSource": "react"
   },
 }

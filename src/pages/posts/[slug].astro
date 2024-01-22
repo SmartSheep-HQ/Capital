@@ -19,6 +19,9 @@ const { post } = (
     type
     title
     description
+    author {
+      name
+    }
     assets {
       caption
       url
@@ -67,8 +70,8 @@ const { post } = (
 
         {
           post.assets?.length > 0 && (
-            <div class="mb-5">
-              <Media sources={post.assets} />
+            <div class="mb-5 w-full">
+              <Media client:only sources={post.assets} author={post.author} />
             </div>
           )
         }
