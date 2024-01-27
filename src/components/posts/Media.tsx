@@ -14,9 +14,16 @@ function Video({ url, ...rest }: { url: string, className?: string }) {
       url: url,
       setting: true,
       flip: true,
+      loop: true,
       playbackRate: true,
       aspectRatio: true,
-      subtitleOffset: true
+      subtitleOffset: true,
+      fullscreen: true,
+      fullscreenWeb: true,
+      screenshot: true,
+      autoPlayback: true,
+      airplay: true,
+      theme: "#49509e",
     });
   });
 
