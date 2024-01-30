@@ -48,14 +48,14 @@ const { post } = (
 }`,
     {
       where: { slug },
-    }
+    },
   )
 ).data;
 ---
 
 <PageLayout title={post.title}>
   <div class="wrapper">
-    <div class="card w-full shadow-xl">
+    <div class="card w-full shadow-xl post">
       {
         post.cover && (
           <figure>
@@ -101,10 +101,7 @@ const { post } = (
               <div class="flex gap-1">
                 {
                   post.categories?.map((category: any) => (
-                    <a
-                      href={`/categories/${category.slug}`}
-                      class="link link-primary"
-                    >
+                    <a href={`/categories/${category.slug}`} class="link link-primary">
                       {category.name}
                     </a>
                   ))
@@ -133,6 +130,13 @@ const { post } = (
     </div>
   </div>
 </PageLayout>
+
+<script>
+  import mediumZoom from "medium-zoom";
+  mediumZoom(document.querySelectorAll(".post img"), {
+    background: "var(--fallback-b1,oklch(var(--b1)/1))",
+  });
+</script>
 
 <style>
   .wrapper {

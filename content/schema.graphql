@@ -6,29 +6,11 @@ type User {
   name: String
   email: String
   password: PasswordState
-  posts(
-    where: PostWhereInput! = {}
-    orderBy: [PostOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: PostWhereUniqueInput
-  ): [Post!]
+  posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   postsCount(where: PostWhereInput! = {}): Int
-  moments(
-    where: MomentWhereInput! = {}
-    orderBy: [MomentOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: MomentWhereUniqueInput
-  ): [Moment!]
+  moments(where: MomentWhereInput! = {}, orderBy: [MomentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: MomentWhereUniqueInput): [Moment!]
   momentsCount(where: MomentWhereInput! = {}): Int
-  events(
-    where: EventWhereInput! = {}
-    orderBy: [EventOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: EventWhereUniqueInput
-  ): [Event!]
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
   isAdmin: Boolean
   isEditor: Boolean
@@ -271,9 +253,7 @@ input ImageFieldInput {
   upload: Upload!
 }
 
-"""
-The `Upload` scalar type represents a file upload.
-"""
+"""The `Upload` scalar type represents a file upload."""
 scalar Upload
 
 input ImageUpdateArgs {
@@ -355,41 +335,17 @@ type Post {
   title: String
   cover: Image
   description: String
-  assets(
-    where: AssetWhereInput! = {}
-    orderBy: [AssetOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: AssetWhereUniqueInput
-  ): [Asset!]
+  assets(where: AssetWhereInput! = {}, orderBy: [AssetOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssetWhereUniqueInput): [Asset!]
   assetsCount(where: AssetWhereInput! = {}): Int
-  images(
-    where: ImageWhereInput! = {}
-    orderBy: [ImageOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: ImageWhereUniqueInput
-  ): [Image!]
+  images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ImageWhereUniqueInput): [Image!]
   imagesCount(where: ImageWhereInput! = {}): Int
   content: Post_content_Document
   type: PostTypeType
   isPublished: Boolean
   author: User
-  categories(
-    where: CategoryWhereInput! = {}
-    orderBy: [CategoryOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: CategoryWhereUniqueInput
-  ): [Category!]
+  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  tags(
-    where: TagWhereInput! = {}
-    orderBy: [TagOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: TagWhereUniqueInput
-  ): [Tag!]
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   createdAt: DateTime
 }
@@ -578,31 +534,13 @@ input TagRelateToManyForCreateInput {
 type Moment {
   id: ID!
   title: String
-  images(
-    where: ImageWhereInput! = {}
-    orderBy: [ImageOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: ImageWhereUniqueInput
-  ): [Image!]
+  images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ImageWhereUniqueInput): [Image!]
   imagesCount(where: ImageWhereInput! = {}): Int
   content: Moment_content_Document
   author: User
-  categories(
-    where: CategoryWhereInput! = {}
-    orderBy: [CategoryOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: CategoryWhereUniqueInput
-  ): [Category!]
+  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  tags(
-    where: TagWhereInput! = {}
-    orderBy: [TagOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: TagWhereUniqueInput
-  ): [Tag!]
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   createdAt: DateTime
 }
@@ -761,21 +699,9 @@ type Event {
   isPublished: Boolean
   isHistory: Boolean
   author: User
-  categories(
-    where: CategoryWhereInput! = {}
-    orderBy: [CategoryOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: CategoryWhereUniqueInput
-  ): [Category!]
+  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  tags(
-    where: TagWhereInput! = {}
-    orderBy: [TagOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: TagWhereUniqueInput
-  ): [Tag!]
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   createdAt: DateTime
 }
@@ -850,29 +776,11 @@ type Category {
   id: ID!
   slug: String
   name: String
-  posts(
-    where: PostWhereInput! = {}
-    orderBy: [PostOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: PostWhereUniqueInput
-  ): [Post!]
+  posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   postsCount(where: PostWhereInput! = {}): Int
-  moments(
-    where: MomentWhereInput! = {}
-    orderBy: [MomentOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: MomentWhereUniqueInput
-  ): [Moment!]
+  moments(where: MomentWhereInput! = {}, orderBy: [MomentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: MomentWhereUniqueInput): [Moment!]
   momentsCount(where: MomentWhereInput! = {}): Int
-  events(
-    where: EventWhereInput! = {}
-    orderBy: [EventOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: EventWhereUniqueInput
-  ): [Event!]
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
 }
 
@@ -924,29 +832,11 @@ type Tag {
   id: ID!
   slug: String
   name: String
-  posts(
-    where: PostWhereInput! = {}
-    orderBy: [PostOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: PostWhereUniqueInput
-  ): [Post!]
+  posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   postsCount(where: PostWhereInput! = {}): Int
-  moments(
-    where: MomentWhereInput! = {}
-    orderBy: [MomentOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: MomentWhereUniqueInput
-  ): [Moment!]
+  moments(where: MomentWhereInput! = {}, orderBy: [MomentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: MomentWhereUniqueInput): [Moment!]
   momentsCount(where: MomentWhereInput! = {}): Int
-  events(
-    where: EventWhereInput! = {}
-    orderBy: [EventOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: EventWhereUniqueInput
-  ): [Event!]
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
 }
 
@@ -1059,9 +949,7 @@ type Mutation {
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
 }
 
-union UserAuthenticationWithPasswordResult =
-  | UserAuthenticationWithPasswordSuccess
-  | UserAuthenticationWithPasswordFailure
+union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
 
 type UserAuthenticationWithPasswordSuccess {
   sessionToken: String!
@@ -1080,85 +968,31 @@ input CreateInitialUserInput {
 }
 
 type Query {
-  users(
-    where: UserWhereInput! = {}
-    orderBy: [UserOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: UserWhereUniqueInput
-  ): [User!]
+  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
-  images(
-    where: ImageWhereInput! = {}
-    orderBy: [ImageOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: ImageWhereUniqueInput
-  ): [Image!]
+  images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ImageWhereUniqueInput): [Image!]
   image(where: ImageWhereUniqueInput!): Image
   imagesCount(where: ImageWhereInput! = {}): Int
-  assets(
-    where: AssetWhereInput! = {}
-    orderBy: [AssetOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: AssetWhereUniqueInput
-  ): [Asset!]
+  assets(where: AssetWhereInput! = {}, orderBy: [AssetOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssetWhereUniqueInput): [Asset!]
   asset(where: AssetWhereUniqueInput!): Asset
   assetsCount(where: AssetWhereInput! = {}): Int
-  posts(
-    where: PostWhereInput! = {}
-    orderBy: [PostOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: PostWhereUniqueInput
-  ): [Post!]
+  posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   post(where: PostWhereUniqueInput!): Post
   postsCount(where: PostWhereInput! = {}): Int
-  moments(
-    where: MomentWhereInput! = {}
-    orderBy: [MomentOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: MomentWhereUniqueInput
-  ): [Moment!]
+  moments(where: MomentWhereInput! = {}, orderBy: [MomentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: MomentWhereUniqueInput): [Moment!]
   moment(where: MomentWhereUniqueInput!): Moment
   momentsCount(where: MomentWhereInput! = {}): Int
-  projects(
-    where: ProjectWhereInput! = {}
-    orderBy: [ProjectOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: ProjectWhereUniqueInput
-  ): [Project!]
+  projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
   project(where: ProjectWhereUniqueInput!): Project
   projectsCount(where: ProjectWhereInput! = {}): Int
-  events(
-    where: EventWhereInput! = {}
-    orderBy: [EventOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: EventWhereUniqueInput
-  ): [Event!]
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   event(where: EventWhereUniqueInput!): Event
   eventsCount(where: EventWhereInput! = {}): Int
-  categories(
-    where: CategoryWhereInput! = {}
-    orderBy: [CategoryOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: CategoryWhereUniqueInput
-  ): [Category!]
+  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   category(where: CategoryWhereUniqueInput!): Category
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  tags(
-    where: TagWhereInput! = {}
-    orderBy: [TagOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-    cursor: TagWhereUniqueInput
-  ): [Tag!]
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tag(where: TagWhereUniqueInput!): Tag
   tagsCount(where: TagWhereInput! = {}): Int
   keystone: KeystoneMeta!
