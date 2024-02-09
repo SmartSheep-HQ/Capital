@@ -29,7 +29,7 @@ const { title } = Astro.props;
 
     <script>
       import NProgress from "nprogress";
-      NProgress.configure({ showSpinner: false, trickleRate: 0.02, trickleSpeed: 800 });
+      NProgress.configure({ showSpinner: false, trickleSpeed: 800 });
       document.addEventListener("astro:before-preparation", function () {
         NProgress.start();
       });
