@@ -6,6 +6,7 @@ import Media from "../../components/posts/Media";
 import { POST_TYPES } from "../../scripts/consts";
 import { graphQuery } from "../../scripts/requests";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
+import { navigate } from "astro:transitions/client";
 
 export const prerender = false;
 
@@ -51,33 +52,37 @@ const { post } = (
     },
   )
 ).data;
+
+if (!post) {
+  return Astro.redirect("/404");
+}
 ---
 
-<PageLayout title={post.title}>
+<PageLayout title={post?.title}>
   <div class="wrapper">
     <div class="card w-full shadow-xl post">
       {
-        post.cover && (
+        post?.cover && (
           <figure>
-            <img src={post.cover.image.url} alt={post.title} />
+            <img src={post?.cover?.image?.url} alt={post?.title} />
           </figure>
         )
       }
       <div class="card-body">
-        <h2 class="card-title">{post.title}</h2>
-        <p class="description">{post.description ?? "No description"}</p>
+        <h2 class="card-title">{post?.title}</h2>
+        <p class="description">{post?.description ?? "No description"}</p>
         <div class="divider"></div>
 
         {
-          post.assets?.length > 0 && (
+          post?.assets?.length > 0 && (
             <div class="mb-5 w-full">
-              <Media client:only sources={post.assets} author={post.author} />
+              <Media client:only sources={post?.assets} author={post?.author} />
             </div>
           )
         }
 
         <div class="prose max-w-none">
-          <DocumentRenderer document={post.content.document} />
+          <DocumentRenderer document={post?.content?.document ?? []} />
         </div>
       </div>
     </div>
@@ -88,21 +93,21 @@ const { post } = (
           <div class="gap-2 text-sm metadata description">
             <div>
               <div>作者</div>
-              <div>{post.author?.name ?? "佚名"}</div>
+              <div>{post?.author?.name ?? "佚名"}</div>
             </div>
             <div>
               <div>类型</div>
               <div class="text-accent">
-                {POST_TYPES[post.type as unknown as string]}
+                {POST_TYPES[post?.type as unknown as string]}
               </div>
             </div>
             <div>
               <div>分类</div>
               <div class="flex gap-1">
                 {
-                  post.categories?.map((category: any) => (
-                    <a href={`/categories/${category.slug}`} class="link link-primary">
-                      {category.name}
+                  post?.categories?.map((category: any) => (
+                    <a href={`/categories/${category?.slug}`} class="link link-primary">
+                      {category?.name}
                     </a>
                   ))
                 }
@@ -112,9 +117,9 @@ const { post } = (
               <div>标签</div>
               <div class="flex gap-1">
                 {
-                  post.tags?.map((tag: any) => (
-                    <a href={`/tags/${tag.slug}`} class="link link-secondary">
-                      {tag.name}
+                  post?.tags?.map((tag: any) => (
+                    <a href={`/tags/${tag?.slug}`} class="link link-secondary">
+                      {tag?.name}
                     </a>
                   ))
                 }
@@ -122,7 +127,7 @@ const { post } = (
             </div>
             <div>
               <div>发布于</div>
-              <div>{new Date(post.createdAt).toLocaleString()}</div>
+              <div>{new Date(post?.createdAt).toLocaleString()}</div>
             </div>
           </div>
         </div>

@@ -1,0 +1,17 @@
+---
+import RootLayout from "../layouts/RootLayout.astro";
+---
+
+<RootLayout>
+  <iframe class="moments-frame" src="https://feed.smartsheep.studio/realms/1?noTitle=yes" />
+</RootLayout>
+
+<style>
+    .moments-frame {
+        margin-top: 64px;
+        display: block;
+        border: 0;
+        width: 100vw;
+        height: calc(100vh - 64px);
+    }
+</style>
