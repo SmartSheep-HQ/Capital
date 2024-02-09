@@ -5,7 +5,7 @@ import { useState, Fragment, useRef, useEffect } from "react";
 
 import "aplayer/dist/APlayer.min.css";
 
-function Video({ url, ...rest }: { url: string, className?: string }) {
+function Video({ url, ...rest }: { url: string; className?: string }) {
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,44 +27,54 @@ function Video({ url, ...rest }: { url: string, className?: string }) {
     });
   });
 
-  return (
-    <div ref={container} {...rest}></div>
-  );
+  return <div ref={container} {...rest}></div>;
 }
 
-function Audio({ url, artist, caption, ...rest }: {
-  url: string,
-  artist: string,
-  caption: string,
-  className?: string
+function Audio({
+  url,
+  artist,
+  caption,
+  ...rest
+}: {
+  url: string;
+  artist: string;
+  caption: string;
+  className?: string;
 }) {
   const container = useRef(null);
 
   useEffect(() => {
     new APlayer({
       container: container.current,
-      audio: [{
-        name: caption,
-        artist: artist,
-        url: url,
-        theme: "#49509e"
-      }]
+      audio: [
+        {
+          name: caption,
+          artist: artist,
+          url: url,
+          theme: "#49509e",
+        },
+      ],
     });
   });
 
-  return (
-    <div ref={container} {...rest}></div>
-  );
+  return <div ref={container} {...rest}></div>;
 }
 
-export default function Media({ sources, author }: {
-  sources: { caption: string; url: string; type: string }[],
-  author?: { name: string }
+export default function Media({
+  sources,
+  author,
+}: {
+  sources: { filename: string; mimetype: string }[];
+  author?: { name: string };
 }) {
   const [focus, setFocus] = useState<boolean[]>(sources.map((_, idx) => idx === 0));
 
   function changeFocus(idx: number) {
     setFocus(focus.map((_, i) => i === idx));
+  }
+
+  function getUrl(item: any) {
+    return item.external_url ? item.external_url : `https://feed.smartsheep.studio/api/attachments/o/${item.file_id}`;
   }
 
   return (
@@ -73,22 +83,22 @@ export default function Media({ sources, author }: {
         <Fragment key={idx}>
           <input
             type="radio"
-            name={item.caption}
+            name={item.filename}
             role="tab"
             className="tab"
-            aria-label={item.caption}
+            aria-label={item.filename}
             checked={focus[idx]}
             onChange={() => changeFocus(idx)}
           />
           <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box w-full">
-            {item.type === "video" && (
+            {item.mimetype === "video" && (
               <div className="w-full h-[460px]">
-                <Video className="w-full h-full" url={item.url} />
+                <Video className="w-full h-full" url={getUrl(item)} />
               </div>
             )}
-            {item.type === "audio" && (
+            {item.mimetype === "audio" && (
               <div className="w-full">
-                <Audio url={item.url} artist={author?.name ?? "佚名"} caption={item.caption} />
+                <Audio url={getUrl(item)} artist={author?.name ?? "佚名"} caption={item.filename} />
               </div>
             )}
           </div>
