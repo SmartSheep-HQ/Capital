@@ -121,11 +121,9 @@ const embedOptions = new URLSearchParams({
     element.height = height ? `${height}px` : "360px";
   }
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const element = document.querySelector<HTMLIFrameElement>("#interactive-iframe");
-    if (element) {
-      resizeInteractiveWidget(element);
-    }
+  const widget = document.querySelector<HTMLIFrameElement>("#interactive-iframe");
+  widget?.addEventListener("onload", () => {
+    resizeInteractiveWidget(widget);
   });
 </script>
 
@@ -151,5 +149,12 @@ const embedOptions = new URLSearchParams({
     .wrapper {
       grid-template-columns: 2fr 1fr;
     }
+  }
+
+  #interactive-iframe {
+    display: block;
+    border: 0;
+    width: 100%;
+    min-height: 360px;
   }
 </style>
