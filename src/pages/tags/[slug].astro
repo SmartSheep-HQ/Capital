@@ -8,41 +8,15 @@ export const prerender = false;
 
 const { slug } = Astro.params;
 
-const { posts } = (
-  await graphQuery(
-    `query Query($where: PostWhereInput!, $orderBy: [PostOrderByInput!]!) {
-  posts(where: $where, orderBy: $orderBy) {
-    slug
-    type
-    title
-    description
-    cover {
-      image {
-        url
-      }
-    }
-    content {
-      document
-    }
-    categories {
-      name
-    }
-    tags {
-      name
-    }
-    createdAt
-  }
-}`,
-    {
-      orderBy: [
-        {
-          createdAt: "desc",
-        },
-      ],
-      where: { tags: { some: { slug: { equals: slug } } } },
-    }
-  )
-).data;
+const response = await fetch(
+  `https://feed.smartsheep.studio/api/posts?${new URLSearchParams({
+    offset: (0).toString(),
+    take: (10).toString(),
+    tag: slug ?? "none",
+    realmId: process.env.PUBLIC_REALM_ID ?? (0).toString(),
+  })}`,
+);
+const posts = (await response.json())["data"];
 ---
 
 <PageLayout title="标签检索">

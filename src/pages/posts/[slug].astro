@@ -14,7 +14,7 @@ const post = (await response.json())["data"];
 if (!post) {
   return Astro.redirect("/404");
 } else if (post.realm_id != parseInt(process.env.PUBLIC_REALM_ID ?? "0")) {
-  return Astro.redirect("https://feed.smartsheep.studio/posts/" + post.id);
+  return Astro.redirect(`https://feed.smartsheep.studio/posts/${post.id}`);
 }
 
 function getThumbnail(item: any): string | null {
@@ -39,6 +39,13 @@ function getAttachments(item: any): any[] {
 function getAuthorLink(user: any): string {
   return `https://feed.smartsheep.studio/accounts/${user.name}`;
 }
+
+const embedOptions = new URLSearchParams({
+  embedded: "yes",
+  title: "讨论",
+  noContent: "yes",
+  noAuthor: "yes",
+}).toString();
 ---
 
 <PageLayout title={post?.title}>
@@ -76,53 +83,51 @@ function getAuthorLink(user: any): string {
         </div>
 
         <Content content={post?.content} client:only />
+
+        <div class="mt-5 flex gap-1">
+          {
+            post?.categories?.map((category: any) => (
+              <a href={`/categories/${category?.alias}`} class="badge badge-primary">
+                <i class="fa-solid fa-layer-group me-1.5" />
+                {category?.name}
+              </a>
+            ))
+          }
+          {
+            post?.tags?.map((tag: any) => (
+              <a href={`/tags/${tag?.alias}`} class="badge badge-accent">
+                <i class="fa-regular fa-tag me-1.5" />
+                {tag?.name}
+              </a>
+            ))
+          }
+        </div>
       </div>
     </div>
 
     <div class="h-fit sticky top-header">
       <div class="card shadow-xl">
-        <div class="card-body">
-          <div class="gap-2 text-sm metadata description">
-            <div>
-              <div>作者</div>
-              <div>{post?.author?.name ?? "佚名"}</div>
-            </div>
-            <div>
-              <div>分类</div>
-              <div class="flex gap-1">
-                {
-                  post?.categories?.map((category: any) => (
-                    <a href={`/categories/${category?.slug}`} class="link link-primary">
-                      {category?.name}
-                    </a>
-                  ))
-                }
-              </div>
-            </div>
-            <div>
-              <div>标签</div>
-              <div class="flex gap-1">
-                {
-                  post?.tags?.map((tag: any) => (
-                    <a href={`/tags/${tag?.slug}`} class="link link-secondary">
-                      {tag?.name}
-                    </a>
-                  ))
-                }
-              </div>
-            </div>
-            <div>
-              <div>发布于</div>
-              <div>{new Date(post?.createdAt).toLocaleString()}</div>
-            </div>
-          </div>
-        </div>
+        <iframe id="interactive-iframe" src={`https://feed.smartsheep.studio/posts/${slug}?${embedOptions}`}> </iframe>
       </div>
     </div>
   </div>
 </PageLayout>
 
-<script></script>
+<script>
+  function resizeInteractiveWidget(element: HTMLIFrameElement) {
+    const width = element.contentWindow?.document.body.scrollWidth;
+    const height = element.contentWindow?.document.body.scrollHeight;
+    element.width = width ? `${width}px` : "100%";
+    element.height = height ? `${height}px` : "360px";
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const element = document.querySelector<HTMLIFrameElement>("#interactive-iframe");
+    if (element) {
+      resizeInteractiveWidget(element);
+    }
+  });
+</script>
 
 <style>
   .wrapper {

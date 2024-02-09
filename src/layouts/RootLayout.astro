@@ -1,6 +1,8 @@
 ---
 import "../assets/fonts/fonts.css";
+
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import "nprogress/nprogress.css";
 
 import Navbar from "../components/Navbar.astro";
 import { ViewTransitions } from "astro:transitions";
@@ -23,6 +25,17 @@ const { title } = Astro.props;
       } else {
         document.documentElement.setAttribute("data-theme", localStorage.getItem("theme"));
       }
+    </script>
+
+    <script>
+      import NProgress from "nprogress";
+      NProgress.configure({ showSpinner: false, trickleRate: 0.02, trickleSpeed: 800 });
+      document.addEventListener("astro:before-preparation", function () {
+        NProgress.start();
+      });
+      document.addEventListener("astro:after-preparation", function () {
+        NProgress.done();
+      });
     </script>
 
     <ViewTransitions />
@@ -59,6 +72,10 @@ const { title } = Astro.props;
 
       .top-header {
         top: 64px;
+      }
+
+      #nprogress .bar {
+        background: #49509e !important;
       }
     </style>
 
