@@ -1,0 +1,155 @@
+---
+import RootLayout from "../../../layouts/RootLayout.astro";
+---
+
+<RootLayout>
+  <div class="w-screen h-screen flex items-center justify-center">
+    <div class="flex flex-col gap-6">
+      <div class="text-center">
+        <p>距离</p>
+        <h2 class="text-2xl font-bold">贰零贰四 甲辰年</h2>
+        <p id="countdown-notifier">还有</p>
+      </div>
+
+      <!-- Countdown -->
+      <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
+        <div class="flex flex-col">
+          <span class="countdown font-mono text-5xl">
+            <span id="countdown-days" style="--value:0"></span>
+          </span>
+          天
+        </div>
+        <div class="flex flex-col">
+          <span class="countdown font-mono text-5xl">
+            <span id="countdown-hours" style="--value:0"></span>
+          </span>
+          时
+        </div>
+        <div class="flex flex-col">
+          <span class="countdown font-mono text-5xl">
+            <span id="countdown-minutes" style="--value:0"></span>
+          </span>
+          分
+        </div>
+        <div class="flex flex-col">
+          <span class="countdown font-mono text-5xl">
+            <span id="countdown-seconds" style="--value:0"></span>
+          </span>
+          秒
+        </div>
+      </div>
+
+      <!-- Footnote -->
+      <div class="text-xs text-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+        <p>智羊陪您过大年</p>
+        <a class="link" href="https://smartsheep.studio">smartsheep.studio</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="fireworks" style="left: 15%; top: 5%;"></div>
+  <div class="fireworks" style="right: 30%; top: 13%; animation-delay: -0.4s"></div>
+  <div class="fireworks" style="left: 5%; top: 23%; animation-delay: -1.7s"></div>
+  <div class="fireworks" style="right: 45%; top: 8%; animation-delay: -3.1s"></div>
+  <div class="fireworks" style="left: 21%; top: 9%; animation-delay: -3.8s"></div>
+  <div class="fireworks" style="right: 63%; top: 23%; animation-delay: -4.5s"></div>
+  <div class="fireworks" style="left: 12%; top: 75%; animation-delay: -5.2s"></div>
+  <div class="fireworks" style="right: 86%; top: 12%; animation-delay: -5.9s"></div>
+  <div class="fireworks" style="left: 23%; top: 34%; animation-delay: -6.6s"></div>
+  <div class="fireworks" style="right: 23%; top: 17%; animation-delay: -7.3s;"></div>
+  <div class="fireworks" style="left: 2%; top: 23%; animation-delay: -8s;"></div>
+  <div class="fireworks" style="right: 46%; top: 63%; animation-delay: -8.7s;"></div>
+</RootLayout>
+
+<script>
+  const targetDate = new Date("2024-02-10T00:00:00.0000");
+
+  const countdownDays = document.querySelector<HTMLSpanElement>("#countdown-days");
+  const countdownHours = document.querySelector<HTMLSpanElement>("#countdown-hours");
+  const countdownMinutes = document.querySelector<HTMLSpanElement>("#countdown-minutes");
+  const countdownSeconds = document.querySelector<HTMLSpanElement>("#countdown-seconds");
+  const countdownNotifier = document.querySelector<HTMLParagraphElement>("#countdown-notifier");
+
+  function calcDelta() {
+    const delta = Math.abs(targetDate.getTime() - Date.now());
+
+    const days = Math.floor(delta / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((delta % (1000 * 60)) / 1000);
+
+    countdownDays?.style.setProperty("--value", days.toString());
+    countdownHours?.style.setProperty("--value", hours.toString());
+    countdownMinutes?.style.setProperty("--value", minutes.toString());
+    countdownSeconds?.style.setProperty("--value", seconds.toString());
+
+    if(targetDate.getTime() <= Date.now() && countdownNotifier != null) {
+        countdownNotifier.innerText = "已过"
+    }
+  }
+
+  setInterval(() => calcDelta(), 100);
+</script>
+
+<style>
+  body {
+    overflow: hidden;
+  }
+  .fireworks {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: #ffefad;
+    -webkit-mask: url("https://imgservices-1252317822.image.myqcloud.com/image/081320210201435/e9951400.png") right top
+      no-repeat;
+    -webkit-mask-size: auto 150px;
+    animation:
+      fireworks 2s steps(24) infinite,
+      random 8s steps(1) infinite,
+      random_color 1s infinite;
+  }
+  @keyframes fireworks {
+    0% {
+      -webkit-mask-position: 0%;
+    }
+    50%,
+    100% {
+      -webkit-mask-position: 100% 100%;
+    }
+  }
+
+  @keyframes random {
+    0% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(200%, 50%) scale(0.8);
+    }
+    50% {
+      transform: translate(80%, 80%) scale(1.2);
+    }
+    75% {
+      transform: translate(20%, 60%) scale(0.65);
+    }
+  }
+  @keyframes random_color {
+    0% {
+      background-color: #ffefad;
+    }
+    25% {
+      background-color: #ffadad;
+    }
+    50% {
+      background-color: #aeadff;
+    }
+    75% {
+      background-color: #adffd9;
+    }
+  }
+  @media screen and (prefers-reduced-motion) {
+    /* 禁用不必要的动画 */
+    .fireworks {
+      animation: none;
+    }
+  }
+</style>
