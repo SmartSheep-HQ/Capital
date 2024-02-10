@@ -9,11 +9,14 @@ export const prerender = false;
 const { slug } = Astro.params;
 
 const response = await fetch(`https://feed.smartsheep.studio/api/posts/${slug}`);
+
+if (response.status !== 200) {
+  return Astro.redirect("/404");
+} 
+
 const post = (await response.json())["data"];
 
-if (!post) {
-  return Astro.redirect("/404");
-} else if (post.realm_id != parseInt(process.env.PUBLIC_REALM_ID ?? "0")) {
+if (post.realm_id != parseInt(process.env.PUBLIC_REALM_ID ?? "0")) {
   return Astro.redirect(`https://feed.smartsheep.studio/posts/${post.id}`);
 }
 
