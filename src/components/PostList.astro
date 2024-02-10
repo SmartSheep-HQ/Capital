@@ -20,7 +20,7 @@ function getThumbnail(item: any): string | null {
 <div class="grid justify-items-strench shadow-lg">
   {
     posts?.map((item) => (
-      <a href={`/p/${item.id}`}>
+      <a href={`/p/${item.alias}`}>
         <div class="card sm:card-side hover:bg-base-200 transition-colors sm:max-w-none">
           {getThumbnail(item) && (
             <figure class="mx-auto w-full object-cover p-6 max-sm:pb-0 sm:max-w-[12rem] sm:pe-0">
