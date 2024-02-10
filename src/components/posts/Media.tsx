@@ -1,33 +1,36 @@
 // @ts-ignore
 import APlayer from "aplayer";
-import Artplayer from "artplayer";
-import { useState, Fragment, useRef, useEffect } from "react";
-
 import "aplayer/dist/APlayer.min.css";
 
-function Video({ url, ...rest }: { url: string; className?: string }) {
-  const container = useRef<HTMLDivElement>(null);
+import "video.js/dist/video-js.css";
 
-  useEffect(() => {
-    new Artplayer({
-      container: container.current as HTMLDivElement,
-      url: url,
-      setting: true,
-      flip: true,
-      loop: true,
-      playbackRate: true,
-      aspectRatio: true,
-      subtitleOffset: true,
-      fullscreen: true,
-      fullscreenWeb: true,
-      screenshot: true,
-      autoPlayback: true,
-      airplay: true,
-      theme: "#49509e",
-    });
-  });
+import videojs from "video.js";
+import { VideoPlayer } from "@videojs-player/react";
+import { useState, Fragment, useRef, useEffect } from "react";
 
-  return <div ref={container} {...rest}></div>;
+function Video({ url, mimetype, ...rest }: { url: string; mimetype: string; className?: string }) {
+  const liveList = ["application/x-mpegURL"];
+  const isSafari = videojs.browser.IS_SAFARI;
+
+  return (
+    <VideoPlayer
+      className="video-js"
+      height={480}
+      crossorigin="anonymous"
+      playsinline
+      controls
+      src={url}
+      liveui={liveList.includes(mimetype)}
+      html5={{
+        vhs: {
+          overrideNative: !isSafari,
+          maxPlaylistRetries: Infinity,
+        },
+        nativeAudioTracks: false,
+        nativeVideoTracks: false,
+      }}
+    />
+  );
 }
 
 function Audio({
@@ -64,10 +67,12 @@ export default function Media({
   sources,
   author,
 }: {
-  sources: { filename: string; mimetype: string }[];
+  sources: { id: number; filename: string; mimetype: string }[];
   author?: { name: string };
 }) {
-  const [focus, setFocus] = useState<boolean[]>(sources.map((_, idx) => idx === 0));
+  const items = sources.sort((a, b) => a.id > b.id ? 1 : -1)
+  console.log(items)
+  const [focus, setFocus] = useState<boolean[]>(items.map((_, idx) => idx === 0));
 
   function changeFocus(idx: number) {
     setFocus(focus.map((_, i) => i === idx));
@@ -79,7 +84,7 @@ export default function Media({
 
   return (
     <div role="tablist" className="tabs tabs-lifted">
-      {sources.map((item, idx) => (
+      {items.map((item, idx) => (
         <Fragment key={idx}>
           <input
             type="radio"
@@ -91,12 +96,12 @@ export default function Media({
             onChange={() => changeFocus(idx)}
           />
           <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box w-full">
-            {item.mimetype === "video" && (
+            {item.mimetype.startsWith("video") && (
               <div className="w-full h-[460px]">
-                <Video className="w-full h-full" url={getUrl(item)} />
+                <Video className="w-full h-full" mimetype={item.mimetype} url={getUrl(item)} />
               </div>
             )}
-            {item.mimetype === "audio" && (
+            {item.mimetype.startsWith("audio") && (
               <div className="w-full">
                 <Audio url={getUrl(item)} artist={author?.name ?? "佚名"} caption={item.filename} />
               </div>

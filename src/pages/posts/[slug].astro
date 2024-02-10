@@ -53,7 +53,7 @@ const embedOptions = new URLSearchParams({
 
 <PageLayout title={post?.title}>
   <div class="wrapper">
-    <div class="card w-full shadow-xl post">
+    <div class="card w-full shadow-xl post h-fit">
       {
         getThumbnail(post) && (
           <figure>
@@ -78,7 +78,7 @@ const embedOptions = new URLSearchParams({
 
           {
             getAttachments(post)?.length > 0 && (
-              <div class="mb-5 w-full">
+              <div class="my-5 w-full">
                 <Media client:only sources={getAttachments(post)} author={post?.author} />
               </div>
             )
