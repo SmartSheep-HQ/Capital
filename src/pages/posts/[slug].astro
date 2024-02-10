@@ -113,20 +113,6 @@ const embedOptions = new URLSearchParams({
   </div>
 </PageLayout>
 
-<script>
-  function resizeInteractiveWidget(element: HTMLIFrameElement) {
-    const width = element.contentWindow?.document.body.scrollWidth;
-    const height = element.contentWindow?.document.body.scrollHeight;
-    element.width = width ? `${width}px` : "100%";
-    element.height = height ? `${height}px` : "360px";
-  }
-
-  const widget = document.querySelector<HTMLIFrameElement>("#interactive-iframe");
-  widget?.addEventListener("onload", () => {
-    resizeInteractiveWidget(widget);
-  });
-</script>
-
 <style>
   .wrapper {
     display: grid;
@@ -149,12 +135,16 @@ const embedOptions = new URLSearchParams({
     .wrapper {
       grid-template-columns: 2fr 1fr;
     }
+
+    #interactive-iframe {
+      height: 100vh;
+    }
   }
 
   #interactive-iframe {
     display: block;
     border: 0;
     width: 100%;
-    min-height: 360px;
+    min-height: 480px;
   }
 </style>
