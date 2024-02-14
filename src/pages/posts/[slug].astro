@@ -32,11 +32,14 @@ function getThumbnail(item: any): string | null {
 }
 
 function getAttachments(item: any): any[] {
-  if (item?.attachments[0] && item?.attachments[0].mimetype.startsWith("image")) {
-    return item?.attachments?.slice(1, item?.attachments?.length - 1) ?? [];
-  } else {
-    return item?.attachments;
-  }
+  let filtered = false;
+  return item.attachments.filter((item: any) => {
+    if(item.mimetype.startsWith("image") && !filtered) {
+      filtered = true;
+      return false;
+    }
+    return true;
+  })
 }
 
 function getAuthorLink(user: any): string {
