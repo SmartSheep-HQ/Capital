@@ -1,36 +1,33 @@
 // @ts-ignore
 import APlayer from "aplayer";
-import "aplayer/dist/APlayer.min.css";
-
-import "video.js/dist/video-js.css";
-
-import videojs from "video.js";
-import { VideoPlayer } from "@videojs-player/react";
+import Artplayer from "artplayer";
 import { useState, Fragment, useRef, useEffect } from "react";
 
-function Video({ url, mimetype, ...rest }: { url: string; mimetype: string; className?: string }) {
-  const liveList = ["application/x-mpegURL"];
-  const isSafari = videojs.browser.IS_SAFARI;
+import "aplayer/dist/APlayer.min.css";
 
-  return (
-    <VideoPlayer
-      className="video-js"
-      height={480}
-      crossorigin="anonymous"
-      playsinline
-      controls
-      src={url}
-      liveui={liveList.includes(mimetype)}
-      html5={{
-        vhs: {
-          overrideNative: !isSafari,
-          maxPlaylistRetries: Infinity,
-        },
-        nativeAudioTracks: false,
-        nativeVideoTracks: false,
-      }}
-    />
-  );
+function Video({ url, mimetype, ...rest }: { url: string; mimetype: string; className?: string }) {
+  const container = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    new Artplayer({
+      container: container.current as HTMLDivElement,
+      url: url,
+      setting: true,
+      flip: true,
+      loop: true,
+      playbackRate: true,
+      aspectRatio: true,
+      subtitleOffset: true,
+      fullscreen: true,
+      fullscreenWeb: true,
+      screenshot: true,
+      autoPlayback: true,
+      airplay: true,
+      theme: "#49509e",
+    });
+  });
+
+  return <div ref={container} {...rest}></div>;
 }
 
 function Audio({
@@ -70,8 +67,8 @@ export default function Media({
   sources: { id: number; filename: string; mimetype: string }[];
   author?: { name: string };
 }) {
-  const items = sources.sort((a, b) => a.id > b.id ? 1 : -1)
-  console.log(items)
+  const items = sources.sort((a, b) => (a.id > b.id ? 1 : -1));
+  console.log(items);
   const [focus, setFocus] = useState<boolean[]>(items.map((_, idx) => idx === 0));
 
   function changeFocus(idx: number) {
