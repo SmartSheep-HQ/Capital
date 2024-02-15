@@ -17,48 +17,11 @@ const items: MenuItem[] = [
 
 <div class="fixed top-0 navbar shadow-md bg-base-100 lg:px-5 z-10">
   <div class="navbar-start">
-    <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h8m-8 6h16"></path>
-        </svg
-        >
-      </div>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        {
-          items.map((item) => (
-            <li>
-              <a href={item.href}>{item.label}</a>
-              {item.children && (
-                <ul class="p-2">
-                  {item.children?.map((child) => (
-                    <li>
-                      <a href={child.href}>{child.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    <a class="btn btn-ghost text-xl" href="/">山羊寒舍</a>
+    <a class="btn btn-ghost text-xl p-2 w-[48px] h-[48px] max-lg:ml-2.5" href="/">
+      <img width="40" height="40" src="/favicon.svg" alt="Logo" />
+    </a>
   </div>
-  <div class="navbar-center hidden lg:flex">
+  <div class="navbar-center flex">
     <ul class="menu menu-horizontal px-1">
       {
         items.map((item) => (
