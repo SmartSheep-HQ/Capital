@@ -21,6 +21,8 @@ const posts = (await response.json())["data"];
       <p class="pt-2">记录生活，记录理想，记录记录……</p>
     </div>
 
-    <PostList posts={posts} />
+    <div class="pb-12">
+      <PostList posts={posts} />
+    </div>
   </div>
 </PageLayout>
