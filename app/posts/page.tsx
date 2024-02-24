@@ -30,7 +30,7 @@ export default function PostList() {
           </Typography>
         </CardContent>
         <CardActions sx={{ paddingX: 4, paddingBottom: 2 }}>
-          <Link href={`/posts/${post.id}`} passHref>
+          <Link href={`/p/${post.id}`} passHref>
             <Button>Read more</Button>
           </Link>
         </CardActions>

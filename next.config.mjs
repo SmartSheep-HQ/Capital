@@ -5,9 +5,18 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
-      },
-    ],
+        hostname: "**"
+      }
+    ]
+  },
+  async rewrites() {
+    return [
+      { source: "/rss", destination: "/feed" },
+      { source: "/rss.xml", destination: "/feed.xml" },
+      { source: "/feed.xml", destination: "/feed" },
+
+      { source: "/p/:id", destination: "/posts/:id" }
+    ];
   }
 };
 

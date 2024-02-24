@@ -18,18 +18,22 @@ import { theme } from "@/app/theme";
 import { ReactNode } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import ArticleIcon from "@mui/icons-material/Article";
+import FeedIcon from "@mui/icons-material/RssFeed";
 import Link from "next/link";
 
 export interface NavigationItem {
-  icon: ReactNode;
-  title: string;
-  link: string;
+  icon?: ReactNode;
+  title?: string;
+  link?: string;
+  divider?: boolean;
 }
 
 export const DRAWER_WIDTH = 320;
 export const NAVIGATION_ITEMS: NavigationItem[] = [
   { icon: <HomeIcon />, title: "首页", link: "/" },
   { icon: <ArticleIcon />, title: "新闻", link: "/posts" },
+  { divider: true },
+  { icon: <FeedIcon />, title: "订阅源", link: "/feed" },
 ];
 
 export const AppNavigationHeader = styled("div")(({ theme }) => ({
@@ -57,14 +61,16 @@ export function AppNavigation({ showClose, onClose }: {
       </AppNavigationHeader>
       <Divider />
       <List>
-        {NAVIGATION_ITEMS.map((item, idx) => (
-          <Link key={idx} href={item.link} passHref>
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.title} />
-            </ListItemButton>
-          </Link>
-        ))}
+        {NAVIGATION_ITEMS.map((item, idx) => {
+          return item.divider ? <Divider /> : (
+            <Link key={idx} href={item.link ?? "/"} passHref>
+              <ListItemButton>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} />
+              </ListItemButton>
+            </Link>
+          );
+        })}
       </List>
     </>
   );
