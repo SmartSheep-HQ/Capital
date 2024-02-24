@@ -8,7 +8,9 @@ import {
   AppBarProps as MuiAppBarProps,
   useScrollTrigger,
   IconButton,
-  styled, Box, useMediaQuery
+  styled,
+  Box,
+  useMediaQuery,
 } from "@mui/material";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { SITE_NAME } from "@/app/consts";
@@ -17,13 +19,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
 import Link from "next/link";
 
-function HideOnScroll(props: {
-  window?: () => Window;
-  children: ReactElement;
-}) {
+function HideOnScroll(props: { window?: () => Window; children: ReactElement }) {
   const { children, window } = props;
   const trigger = useScrollTrigger({
-    target: window ? window() : undefined
+    target: window ? window() : undefined,
   });
 
   return (
@@ -38,24 +37,25 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const ShellAppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open"
+  shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => {
   const isMobile = useMediaQuery(isMobileQuery);
 
-  return ({
+  return {
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    ...(!isMobile && open && {
-      width: `calc(100% - ${DRAWER_WIDTH}px)`,
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen
+    ...(!isMobile &&
+      open && {
+        width: `calc(100% - ${DRAWER_WIDTH}px)`,
+        transition: theme.transitions.create(["margin", "width"], {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginRight: DRAWER_WIDTH,
       }),
-      marginRight: DRAWER_WIDTH
-    })
-  });
+  };
 });
 
 const AppMain = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
@@ -63,28 +63,26 @@ const AppMain = styled("main", { shouldForwardProp: (prop) => prop !== "open" })
 }>(({ theme, open }) => {
   const isMobile = useMediaQuery(isMobileQuery);
 
-  return ({
+  return {
     flexGrow: 1,
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
     marginRight: -DRAWER_WIDTH,
-    ...(!isMobile && open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen
+    ...(!isMobile &&
+      open && {
+        transition: theme.transitions.create("margin", {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginRight: 0,
       }),
-      marginRight: 0
-    }),
-    position: "relative"
-  });
+    position: "relative",
+  };
 });
 
-
-export default function AppShell({ children }: {
-  children: ReactNode,
-}) {
+export default function AppShell({ children }: { children: ReactNode }) {
   let documentWindow: Window;
 
   const isMobile = useMediaQuery(isMobileQuery);
@@ -110,9 +108,7 @@ export default function AppShell({ children }: {
             </IconButton>
 
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: "1.2rem" }}>
-              <Link href="/">
-                {SITE_NAME}
-              </Link>
+              <Link href="/">{SITE_NAME}</Link>
             </Typography>
 
             <IconButton

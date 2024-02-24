@@ -12,7 +12,7 @@ import {
   ListItemIcon,
   ListItemText,
   styled,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import { theme } from "@/app/theme";
 import { ReactNode } from "react";
@@ -42,27 +42,25 @@ export const AppNavigationHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   justifyContent: "flex-start",
   height: 64,
-  ...theme.mixins.toolbar
+  ...theme.mixins.toolbar,
 }));
 
-export function AppNavigation({ showClose, onClose }: {
-  showClose?: boolean,
-  onClose: () => void
-}) {
+export function AppNavigation({ showClose, onClose }: { showClose?: boolean; onClose: () => void }) {
   return (
     <>
       <AppNavigationHeader>
-        {
-          showClose &&
+        {showClose && (
           <IconButton onClick={onClose}>
             {theme.direction === "rtl" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
-        }
+        )}
       </AppNavigationHeader>
       <Divider />
       <List>
         {NAVIGATION_ITEMS.map((item, idx) => {
-          return item.divider ? <Divider key={idx} /> : (
+          return item.divider ? (
+            <Divider key={idx} />
+          ) : (
             <Link key={idx} href={item.link ?? "/"} passHref>
               <ListItemButton>
                 <ListItemIcon>{item.icon}</ListItemIcon>
@@ -78,10 +76,7 @@ export function AppNavigation({ showClose, onClose }: {
 
 export const isMobileQuery = theme.breakpoints.down("md");
 
-export default function NavigationDrawer({ open, onClose }: {
-  open: boolean,
-  onClose: () => void,
-}) {
+export default function NavigationDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const isMobile = useMediaQuery(isMobileQuery);
 
   return isMobile ? (
@@ -96,8 +91,8 @@ export default function NavigationDrawer({ open, onClose }: {
         sx={{
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
-            width: DRAWER_WIDTH
-          }
+            width: DRAWER_WIDTH,
+          },
         }}
       >
         <AppNavigation onClose={onClose} />
@@ -112,8 +107,8 @@ export default function NavigationDrawer({ open, onClose }: {
         width: DRAWER_WIDTH,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: DRAWER_WIDTH
-        }
+          width: DRAWER_WIDTH,
+        },
       }}
     >
       <AppNavigation showClose onClose={onClose} />

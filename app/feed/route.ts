@@ -8,7 +8,7 @@ export async function GET() {
     description: SITE_DESCRIPTION,
     site_url: SITE_URL,
     feed_url: `${SITE_URL}/feed`,
-    language: "zh-CN"
+    language: "zh-CN",
   });
 
   getSortedPosts().forEach((item) => {
@@ -22,7 +22,7 @@ export async function GET() {
 
   return new Response(feed.xml(), {
     headers: {
-      "content-type": "application/xml"
-    }
+      "content-type": "application/xml",
+    },
   });
 }

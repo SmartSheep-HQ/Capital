@@ -5,11 +5,11 @@ import { createTheme } from "@mui/material/styles";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#49509e"
+      main: "#49509e",
     },
     secondary: {
-      main: "#d43630"
-    }
+      main: "#d43630",
+    },
   },
   typography: {
     h1: { fontSize: "2.5rem" },

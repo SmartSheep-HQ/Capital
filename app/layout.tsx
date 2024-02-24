@@ -14,6 +14,7 @@ import "@fontsource/roboto/700.css";
 import "./globals.css";
 
 import AppShell from "@/components/AppShell";
+import NextTopLoader from "nextjs-toploader";
 
 export const runtime = "edge";
 
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: Readonly<{
     <body>
     <AppRouterCacheProvider>
       <CssBaseline />
+      <NextTopLoader showAtBottom color="#4a5099" />
       <ThemeProvider theme={theme}>
         <AppShell>{children}</AppShell>
       </ThemeProvider>

@@ -1,7 +1,7 @@
 "use client";
 
-import Markdown from "react-markdown";
+import { PortableText } from "@portabletext/react";
 
-export default function PostContent({ content }: { content: string }) {
-  return <Markdown>{content}</Markdown>;
+export default function PostContent({ content }: { content: any }) {
+  return <PortableText value={content} />;
 }
