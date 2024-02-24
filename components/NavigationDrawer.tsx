@@ -2,15 +2,12 @@
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import {
   Box,
   Divider,
   Drawer,
   IconButton,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -20,6 +17,7 @@ import {
 import { theme } from "@/app/theme";
 import { ReactNode } from "react";
 import HomeIcon from "@mui/icons-material/Home";
+import ArticleIcon from "@mui/icons-material/Article";
 import Link from "next/link";
 
 export interface NavigationItem {
@@ -30,7 +28,8 @@ export interface NavigationItem {
 
 export const DRAWER_WIDTH = 320;
 export const NAVIGATION_ITEMS: NavigationItem[] = [
-  { icon: <HomeIcon />, title: "首页", link: "/" }
+  { icon: <HomeIcon />, title: "首页", link: "/" },
+  { icon: <ArticleIcon />, title: "新闻", link: "/posts" },
 ];
 
 export const AppNavigationHeader = styled("div")(({ theme }) => ({

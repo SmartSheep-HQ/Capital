@@ -34,7 +34,7 @@ export default function Home() {
         </Grid>
         <Grid item xs={12} md={6} sx={{ display: "flex", justifyContent: "end" }}>
           <Box>
-            <Image src="smartsheep.svg" alt="Logo" width={256} height={256} />
+            <Image src="/smartsheep.svg" alt="Logo" width={256} height={256} />
           </Box>
         </Grid>
       </Grid>

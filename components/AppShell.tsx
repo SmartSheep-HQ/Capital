@@ -15,6 +15,7 @@ import { SITE_NAME } from "@/app/consts";
 import NavigationDrawer, { DRAWER_WIDTH, AppNavigationHeader, isMobileQuery } from "@/components/NavigationDrawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import Image from "next/image";
+import Link from "next/link";
 
 function HideOnScroll(props: {
   window?: () => Window;
@@ -105,11 +106,13 @@ export default function AppShell({ children }: {
               aria-label="menu"
               sx={{ ml: isMobile ? 0.5 : 0, mr: 2 }}
             >
-              <Image src="smartsheep.svg" alt="Logo" width={32} height={32} />
+              <Image src="/smartsheep.svg" alt="Logo" width={32} height={32} />
             </IconButton>
 
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {SITE_NAME}
+              <Link href="/">
+                {SITE_NAME}
+              </Link>
             </Typography>
 
             <IconButton
