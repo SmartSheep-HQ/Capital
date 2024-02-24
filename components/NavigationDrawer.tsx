@@ -18,14 +18,27 @@ import {
   useMediaQuery
 } from "@mui/material";
 import { theme } from "@/app/theme";
+import { ReactNode } from "react";
+import HomeIcon from "@mui/icons-material/Home";
+import Link from "next/link";
+
+export interface NavigationItem {
+  icon: ReactNode;
+  title: string;
+  link: string;
+}
 
 export const DRAWER_WIDTH = 320;
+export const NAVIGATION_ITEMS: NavigationItem[] = [
+  { icon: <HomeIcon />, title: "首页", link: "/" }
+];
 
 export const AppNavigationHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: theme.spacing(0, 1),
   justifyContent: "flex-start",
+  height: 64,
   ...theme.mixins.toolbar
 }));
 
@@ -45,28 +58,13 @@ export function AppNavigation({ showClose, onClose }: {
       </AppNavigationHeader>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {NAVIGATION_ITEMS.map((item, idx) => (
+          <Link key={idx} href={item.link} passHref>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} />
             </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+          </Link>
         ))}
       </List>
     </>

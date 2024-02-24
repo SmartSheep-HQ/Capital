@@ -64,7 +64,6 @@ const AppMain = styled("main", { shouldForwardProp: (prop) => prop !== "open" })
 
   return ({
     flexGrow: 1,
-    padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -92,19 +91,19 @@ export default function AppShell({ children }: {
 
   useEffect(() => {
     documentWindow = window;
-  })
+  });
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <>
       <HideOnScroll window={() => documentWindow}>
-        <ShellAppBar open={open}>
-          <Toolbar>
+        <ShellAppBar open={open} position="fixed">
+          <Toolbar sx={{ height: 64 }}>
             <IconButton
               size="large"
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{ ml: isMobile ? 0.5 : 0, mr: 2 }}
             >
               <Image src="smartsheep.svg" alt="Logo" width={32} height={32} />
             </IconButton>
@@ -127,12 +126,15 @@ export default function AppShell({ children }: {
         </ShellAppBar>
       </HideOnScroll>
 
-      <AppMain open={open}>
-        <AppNavigationHeader />
-        {children}
-      </AppMain>
+      <Box sx={{ display: "flex" }}>
+        <AppMain open={open}>
+          <AppNavigationHeader />
 
-      <NavigationDrawer open={open} onClose={() => setOpen(false)} />
-    </Box>
+          {children}
+        </AppMain>
+
+        <NavigationDrawer open={open} onClose={() => setOpen(false)} />
+      </Box>
+    </>
   );
 }
