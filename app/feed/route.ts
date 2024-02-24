@@ -16,14 +16,6 @@ export async function GET() {
 
   const posts = await client.fetch<any[]>(`*[_type == "post"] {
     title, description, slug, publishedAt,
-    mainImage {
-      asset -> {
-        _id,
-        url
-      },
-      alt
-    },
-    "categories": categories[]->title,
   }`);
 
   posts.forEach((item) => {

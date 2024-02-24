@@ -1,9 +1,11 @@
 import { MetadataRoute } from "next";
-import { getSortedPosts, Post } from "@/content/posts";
 import { SITE_URL } from "@/app/consts";
+import { client } from "@/sanity/lib/client";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = getSortedPosts();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await client.fetch<any[]>(`*[_type == "post"] {
+    slug, publishedAt,
+  }`);
 
   return [
     {
@@ -19,9 +21,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
 
-    ...posts.map((item: Post) => ({
-      url: `${SITE_URL}/posts/${item.id}`,
-      lastModified: item.date,
+    ...posts.map((item: any) => ({
+      url: `${SITE_URL}/posts/${item.slug.current}`,
+      lastModified: new Date(item.publishedAt),
       changeFrequency: "daily" as any,
       priority: 0.75,
     })),
