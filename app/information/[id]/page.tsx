@@ -29,6 +29,14 @@ const INFO_DIRECTORY: { [id: string]: InfoMeta } = {
   }
 };
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const info = INFO_DIRECTORY[params.id];
+
+  return {
+    title: info?.title,
+  }
+}
+
 export default function InfoPage({ params }: { params: { id: string } }) {
   const info = INFO_DIRECTORY[params.id];
 

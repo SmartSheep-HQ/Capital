@@ -3,6 +3,18 @@ import { client } from "@/sanity/lib/client";
 import PostContent from "@/components/posts/PostContent";
 import Image from "next/image";
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const post = await client.fetch<any>(`*[_type == "post" && slug.current == $slug][0] {
+    title, description
+  }`, { slug: params.id });
+
+
+  return {
+    title: post.title,
+    description: post.description
+  };
+}
+
 export default async function PostDetailPage({ params }: { params: { id: string } }) {
   const post = await client.fetch<any>(`*[_type == "post" && slug.current == $slug][0] {
     title, description, slug, body, author, publishedAt,

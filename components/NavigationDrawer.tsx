@@ -38,7 +38,7 @@ export interface NavigationItem {
 export const DRAWER_WIDTH = 320;
 export const NAVIGATION_ITEMS: NavigationItem[] = [
   { icon: <HomeIcon />, title: "首页", link: "/" },
-  { icon: <ArticleIcon />, title: "新闻", link: "/posts" },
+  { icon: <ArticleIcon />, title: "博客", link: "/posts" },
   {
     icon: <InfoIcon />, title: "信息中心", children: [
       { icon: <GavelIcon />, title: "用户协议", link: "/i/user-agreement" },

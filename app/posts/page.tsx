@@ -3,6 +3,10 @@ import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "博客"
+}
+
 export default async function PostList() {
   const posts = await client.fetch<any[]>(`*[_type == "post"] {
     title, description, slug, author, publishedAt,
