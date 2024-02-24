@@ -109,7 +109,7 @@ export default function AppShell({ children }: {
               <Image src="/smartsheep.svg" alt="Logo" width={32} height={32} />
             </IconButton>
 
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: "1.2rem" }}>
               <Link href="/">
                 {SITE_NAME}
               </Link>

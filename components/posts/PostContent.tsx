@@ -1,7 +1,7 @@
 "use client";
 
-import MuiMarkdown from "mui-markdown";
+import Markdown from "react-markdown";
 
 export default function PostContent({ content }: { content: string }) {
-  return <MuiMarkdown>{content}</MuiMarkdown>;
+  return <Markdown>{content}</Markdown>;
 }

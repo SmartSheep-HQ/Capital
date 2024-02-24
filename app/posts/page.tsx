@@ -22,7 +22,7 @@ export default function PostList() {
         }
 
         <CardContent sx={{ paddingX: 5, paddingY: 3 }}>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h3">
             {post.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">

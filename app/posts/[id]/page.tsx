@@ -22,7 +22,7 @@ export default function PostDetailPage({ params }: { params: { id: string } }) {
 
       <CardContent sx={{ paddingX: 5, paddingY: 3 }}>
         <Box>
-          <Typography gutterBottom variant="h5" component="h1">
+          <Typography gutterBottom variant="h2">
             {post.title}
           </Typography>
           <Typography color="text.secondary" variant="body2">
@@ -30,7 +30,7 @@ export default function PostDetailPage({ params }: { params: { id: string } }) {
           </Typography>
         </Box>
         <Divider sx={{ my: 5 }} />
-        <Box component="article" sx={{ minWidth: 0 }}>
+        <Box component="article" className="prose max-w-none" sx={{ minWidth: 0 }}>
           <PostContent content={post.content ?? ""} />
         </Box>
       </CardContent>
