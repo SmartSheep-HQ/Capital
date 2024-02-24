@@ -19,10 +19,10 @@ import { Fragment, ReactNode, useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import ArticleIcon from "@mui/icons-material/Article";
 import FeedIcon from "@mui/icons-material/RssFeed";
-import InfoIcon from '@mui/icons-material/Info';
-import GavelIcon from '@mui/icons-material/Gavel';
-import PolicyIcon from '@mui/icons-material/Policy';
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import InfoIcon from "@mui/icons-material/Info";
+import GavelIcon from "@mui/icons-material/Gavel";
+import PolicyIcon from "@mui/icons-material/Policy";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Link from "next/link";
@@ -59,6 +59,40 @@ export const AppNavigationHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar
 }));
 
+export function AppNavigationSection({ items, depth }: { items: NavigationItem[], depth?: number }) {
+  const [open, setOpen] = useState(false);
+
+  return items.map((item, idx) => {
+    if (item.divider) {
+      return <Divider key={idx} sx={{ my: 1 }} />;
+    } else if (item.children) {
+      return (
+        <Fragment key={idx}>
+          <ListItemButton onClick={() => setOpen(!open)} sx={{ pl: 2 + (depth ?? 0) * 2 }}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.title} />
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <AppNavigationSection items={item.children} depth={(depth ?? 0) + 1} />
+            </List>
+          </Collapse>
+        </Fragment>
+      );
+    } else {
+      return (
+        <Link key={idx} href={item.link ?? "/"} passHref>
+          <ListItemButton sx={{ pl: 2 + (depth ?? 0) * 2 }}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.title} />
+          </ListItemButton>
+        </Link>
+      );
+    }
+  });
+}
+
 export function AppNavigation({ showClose, onClose }: { showClose?: boolean; onClose: () => void }) {
   return (
     <>
@@ -71,43 +105,7 @@ export function AppNavigation({ showClose, onClose }: { showClose?: boolean; onC
       </AppNavigationHeader>
       <Divider />
       <List>
-        {NAVIGATION_ITEMS.map((item, idx) => {
-          if (item.divider) {
-            return <Divider key={idx} sx={{ my: 1 }} />;
-          } else if (item.children) {
-            const [open, setOpen] = useState(false);
-            return (
-              <Fragment key={idx}>
-                <ListItemButton onClick={() => setOpen(!open)}>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.title} />
-                  {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    {item.children.map((item, idx) => item.divider ? (
-                      <Divider key={idx} />
-                    ) : (
-                      <Link key={idx} href={item.link ?? "/"} passHref>
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>{item.icon}</ListItemIcon>
-                          <ListItemText primary={item.title} />
-                        </ListItemButton>
-                      </Link>
-                    ))}
-                  </List>
-                </Collapse>
-              </Fragment>
-            );
-          } else {
-            return <Link key={idx} href={item.link ?? "/"} passHref>
-              <ListItemButton>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} />
-              </ListItemButton>
-            </Link>;
-          }
-        })}
+        <AppNavigationSection items={NAVIGATION_ITEMS} />
       </List>
     </>
   );
