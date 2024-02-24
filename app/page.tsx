@@ -32,7 +32,12 @@ export default function Home() {
           </Typography>
           <Button variant="contained" href="#about-us" size="large">探索更多</Button>
         </Grid>
-        <Grid item xs={12} md={6} sx={{ display: "flex", justifyContent: "end" }}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{ display: "flex", justifyContent: { xs: "center", lg: "end" }, order: { xs: -100, lg: 0 } }}
+        >
           <Box>
             <Image src="/smartsheep.svg" alt="Logo" width={256} height={256} />
           </Box>
@@ -45,7 +50,7 @@ export default function Home() {
         alignItems="center"
         sx={{ height: "calc(100vh - 64px)" }}
       >
-        <Grid item xs={12} md={6} sx={{ display: "flex", justifyContent: "start" }}>
+        <Grid item xs={12} md={6} sx={{ display: "flex", justifyContent: { xs: "center", lg: "end" } }}>
           <Card sx={{ flexGrow: 1, mr: { xs: 0, md: 8 } }}>
             <List sx={{ width: "100%", bgcolor: "background.paper" }}>
               {RELATED_ACCOUNTS.map((item, idx) => (
