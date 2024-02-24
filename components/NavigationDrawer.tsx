@@ -62,7 +62,7 @@ export function AppNavigation({ showClose, onClose }: {
       <Divider />
       <List>
         {NAVIGATION_ITEMS.map((item, idx) => {
-          return item.divider ? <Divider /> : (
+          return item.divider ? <Divider key={idx} /> : (
             <Link key={idx} href={item.link ?? "/"} passHref>
               <ListItemButton>
                 <ListItemIcon>{item.icon}</ListItemIcon>

@@ -15,12 +15,14 @@ import "./globals.css";
 
 import AppShell from "@/components/AppShell";
 
+export const runtime = "edge";
+
 export const metadata: Metadata = {
   title: {
     default: SITE_NAME,
     template: `${SITE_NAME} | %s`
   },
-  description: SITE_DESCRIPTION,
+  description: SITE_DESCRIPTION
 };
 
 export default function RootLayout({ children }: Readonly<{
