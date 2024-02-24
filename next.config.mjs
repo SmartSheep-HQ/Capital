@@ -1,3 +1,5 @@
+import mdx from "@next/mdx";
+
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
@@ -5,9 +7,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
-      },
-    ],
+        hostname: "**"
+      }
+    ]
   },
   async rewrites() {
     return [
@@ -16,8 +18,9 @@ const nextConfig = {
       { source: "/feed.xml", destination: "/feed" },
 
       { source: "/p/:id", destination: "/posts/:id" },
+      { source: "/i/:id", destination: "/information/:id" }
     ];
-  },
+  }
 };
 
-export default nextConfig;
+export default mdx()(nextConfig);

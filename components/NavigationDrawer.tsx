@@ -3,7 +3,7 @@
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {
-  Box,
+  Box, Collapse,
   Divider,
   Drawer,
   IconButton,
@@ -12,13 +12,19 @@ import {
   ListItemIcon,
   ListItemText,
   styled,
-  useMediaQuery,
+  useMediaQuery
 } from "@mui/material";
 import { theme } from "@/app/theme";
-import { ReactNode } from "react";
+import { Fragment, ReactNode, useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import ArticleIcon from "@mui/icons-material/Article";
 import FeedIcon from "@mui/icons-material/RssFeed";
+import InfoIcon from '@mui/icons-material/Info';
+import GavelIcon from '@mui/icons-material/Gavel';
+import PolicyIcon from '@mui/icons-material/Policy';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import Link from "next/link";
 
 export interface NavigationItem {
@@ -26,14 +32,22 @@ export interface NavigationItem {
   title?: string;
   link?: string;
   divider?: boolean;
+  children?: NavigationItem[];
 }
 
 export const DRAWER_WIDTH = 320;
 export const NAVIGATION_ITEMS: NavigationItem[] = [
   { icon: <HomeIcon />, title: "首页", link: "/" },
   { icon: <ArticleIcon />, title: "新闻", link: "/posts" },
+  {
+    icon: <InfoIcon />, title: "信息中心", children: [
+      { icon: <GavelIcon />, title: "用户协议", link: "/i/user-agreement" },
+      { icon: <PolicyIcon />, title: "隐私协议", link: "/i/privacy-policy" },
+      { icon: <SupervisedUserCircleIcon />, title: "社区准则", link: "/i/community-guidelines" }
+    ]
+  },
   { divider: true },
-  { icon: <FeedIcon />, title: "订阅源", link: "/feed" },
+  { icon: <FeedIcon />, title: "订阅源", link: "/feed" }
 ];
 
 export const AppNavigationHeader = styled("div")(({ theme }) => ({
@@ -42,7 +56,7 @@ export const AppNavigationHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   justifyContent: "flex-start",
   height: 64,
-  ...theme.mixins.toolbar,
+  ...theme.mixins.toolbar
 }));
 
 export function AppNavigation({ showClose, onClose }: { showClose?: boolean; onClose: () => void }) {
@@ -58,16 +72,41 @@ export function AppNavigation({ showClose, onClose }: { showClose?: boolean; onC
       <Divider />
       <List>
         {NAVIGATION_ITEMS.map((item, idx) => {
-          return item.divider ? (
-            <Divider key={idx} />
-          ) : (
-            <Link key={idx} href={item.link ?? "/"} passHref>
+          if (item.divider) {
+            return <Divider key={idx} sx={{ my: 1 }} />;
+          } else if (item.children) {
+            const [open, setOpen] = useState(false);
+            return (
+              <Fragment key={idx}>
+                <ListItemButton onClick={() => setOpen(!open)}>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.title} />
+                  {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {item.children.map((item, idx) => item.divider ? (
+                      <Divider key={idx} />
+                    ) : (
+                      <Link key={idx} href={item.link ?? "/"} passHref>
+                        <ListItemButton sx={{ pl: 4 }}>
+                          <ListItemIcon>{item.icon}</ListItemIcon>
+                          <ListItemText primary={item.title} />
+                        </ListItemButton>
+                      </Link>
+                    ))}
+                  </List>
+                </Collapse>
+              </Fragment>
+            );
+          } else {
+            return <Link key={idx} href={item.link ?? "/"} passHref>
               <ListItemButton>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItemButton>
-            </Link>
-          );
+            </Link>;
+          }
         })}
       </List>
     </>
@@ -91,8 +130,8 @@ export default function NavigationDrawer({ open, onClose }: { open: boolean; onC
         sx={{
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
-            width: DRAWER_WIDTH,
-          },
+            width: DRAWER_WIDTH
+          }
         }}
       >
         <AppNavigation onClose={onClose} />
@@ -107,8 +146,8 @@ export default function NavigationDrawer({ open, onClose }: { open: boolean; onC
         width: DRAWER_WIDTH,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: DRAWER_WIDTH,
-        },
+          width: DRAWER_WIDTH
+        }
       }}
     >
       <AppNavigation showClose onClose={onClose} />

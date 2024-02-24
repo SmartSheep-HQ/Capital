@@ -6,6 +6,11 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  theme: {
+    fontFamily: {
+      sans: ["Roboto", "sans"]
+    }
+  },
   plugins: [require("@tailwindcss/typography")],
 };
 export default config;

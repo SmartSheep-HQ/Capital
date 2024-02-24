@@ -36,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{
     <AppRouterCacheProvider>
       <CssBaseline />
       <SpeedInsights />
-      <NextTopLoader color="#ffffff" />
+      <NextTopLoader color="#ffffff" showSpinner={false} />
       <ThemeProvider theme={theme}>
         <AppShell>{children}</AppShell>
       </ThemeProvider>
