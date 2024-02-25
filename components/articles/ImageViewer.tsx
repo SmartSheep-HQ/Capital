@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import Zoomist from "zoomist";
 
 import "zoomist/css";
@@ -13,7 +14,7 @@ export default function ImageViewer({ src, alt }: { src: string, alt: string }) 
       new Zoomist(container.current, {
         maxScale: 5,
         bounds: true,
-        pinchable: true,
+        pinchable: true
       });
     }
   });
@@ -22,7 +23,14 @@ export default function ImageViewer({ src, alt }: { src: string, alt: string }) 
     <div ref={container} className="zoomist-container h-fit">
       <div className="zoomist-wrapper">
         <div className="zoomist-image h-fit">
-          <img src={src} alt={alt} />
+          <Image
+            src={src}
+            alt={alt}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
         </div>
       </div>
     </div>
